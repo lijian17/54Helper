@@ -1,0 +1,5 @@
+# 工程文件
+.project
+node_modules/
+package-lock.json
+output/

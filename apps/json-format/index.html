@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Json格式化查看工具</title>
+		<link rel="stylesheet" href="index.css" />
+		<script type="text/javascript" src="../static/vendor/vue/vue.js"></script>
+		<script type="text/javascript" src="../static/vendor/require/require.js"></script>
+	</head>
+
+	<body>
+		<div class="wrapper wp-json" id="pageContainer">
+			<div class="panel panel-default" style="margin-bottom: 0px;">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+                        <a href="https://github.com/lijian17/54Helper/wiki" target="_blank" class="x-a-high">
+                            <img src="../static/img/icon16.png" alt="54helper"/> 54Helper</a>：JSON格式化查看
+                        <span class="x-xdemo" ref="demoLink1" @click="setDemo">示例1：JSON片段</span>
+                        <a class="x-xdemo" href="https://www.sojson.com/open/api/weather/json.shtml?city=%E5%8C%97%E4%BA%AC" target="_blank">示例2：在线JSON-1</a>
+                        <a class="x-xdemo" href="https://suggest.taobao.com/sug?code=utf-8&q=iphonex&callback=thisIsACallbackFunction" target="_blank">示例3：在线JSON-2</a></h3>
+				</div>
+			</div>
+
+			<div class="panel-body mod-json">
+				<div class="row panel-txt">
+					<textarea class="form-control mod-textarea" id="jsonSource" placeholder="在这里粘贴您需要进行格式化的JSON代码" ref="jsonBox" v-model="jsonSource" @input="format"></textarea>
+					<div><button id="btnFormat" class="btn btn-primary ui-mt-10" @click="format">格式化</button><span id="errorMsg" v-html="errorMsg"></span></div>
+				</div>
+
+				<div class="row rst-item" id="modJsonResult">
+					<div id="formattingMsg">
+						<svg id="spinner" width="16" height="16" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" version="1.1">
+							<path d="M 150,0 a 150,150 0 0,1 106.066,256.066 l -35.355,-35.355 a -100,-100 0 0,0 -70.711,-170.711 z" fill="#3d7fe6"></path>
+						</svg>
+						加载中...
+					</div>
+					<div id="jfCallbackName_start" class="callback-name">{{jfCallbackName_start}}</div>
+					<div id="jfContent" v-html="resultContent"></div>
+					<pre id="jfContent_pre"></pre>
+					<div id="jfCallbackName_end" class="callback-name">{{jfCallbackName_end}}</div>
+				</div>
+			</div>
+
+		</div>
+		<script src="../static/vendor/jquery/jquery-3.3.1.min.js"></script>
+		<script src="index.js"></script>
+	</body>
+
+</html>
