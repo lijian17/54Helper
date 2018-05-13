@@ -1,0 +1,39 @@
+{
+  "name": "54helper",
+  "version": "1.0.0",
+  "description": "程序员开发助手(chrome extension)",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-callback": "0.0.3",
+    "gulp-clean": "^0.4.0",
+    "gulp-copy": "^1.1.0",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-jsonminify": "^1.1.0",
+    "gulp-uglify-es": "^1.0.1",
+    "gulp-uglifycss": "^1.0.9",
+    "gulp-watch-path": "^0.1.0",
+    "gulp-zip": "^4.1.0",
+    "pretty-bytes": "^4.0.2",
+    "run-sequence": "^2.2.1",
+    "shelljs": "^0.8.1"
+  },
+  "scripts": {
+    "watch": "gulp watch",
+    "build": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lijian17/54Helper.git"
+  },
+  "keywords": [
+    "54helper"
+  ],
+  "author": "lijian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lijian17/54Helper/issues"
+  },
+  "homepage": "https://github.com/lijian17/54Helper"
+}
