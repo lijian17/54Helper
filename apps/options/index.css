@@ -11,3 +11,9 @@
     color: #000;
     font-size: 18px;
 }
+
+/*对联广告底部固定*/
+.couplet_ad{position:fixed;bottom:auto; top:0;  z-index:99999; margin-top:158px;}
+.couplet_ad a{ display:block; cursor:pointer;}
+#ad_left{ left: 0px;}
+#ad_right{ right: 0px;}
