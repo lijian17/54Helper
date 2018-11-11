@@ -28,17 +28,19 @@ new Vue({
 
     methods: {
         format: function () {
+            if(!this.sourceContent.trim()) {
+                return alert('内容为空，不需要美化处理！');
+            }
 
             let beauty = (result) => {
                 result = result.replace(/>/g, '&gt;').replace(/</g, '&lt;');
-                result = '<pre class="brush: ' + this.selectedType.toLowerCase() + ';toolbar:false;">' + result + '</pre>';
+                result = '<pre class="language-' + this.selectedType.toLowerCase() + ' line-numbers"><code>' + result + '</code></pre>';
                 this.resultContent = result;
 
                 // 代码高亮
                 this.$nextTick(() => {
-                    SyntaxHighlighter.defaults['toolbar'] = false;
-                    SyntaxHighlighter.highlight();
-                })
+                    Prism.highlightAll();
+                });
             };
 
             switch (this.selectedType) {
