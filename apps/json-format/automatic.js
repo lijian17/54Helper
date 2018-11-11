@@ -226,7 +226,7 @@ module.exports = (() => {
             if (options && options['MAX_JSON_KEYS_NUMBER']) {
                 let keysCount = _getAllKeysCount(jsonObj);
                 if (keysCount > options['MAX_JSON_KEYS_NUMBER']) {
-                    let msg = '当前JSON共 <b style="color:red">' + keysCount + '</b> 个Key，大于预设值' + options['MAX_JSON_KEYS_NUMBER'] + '，已取消自动格式化；可到FeHelper设置页调整此配置！';
+                    let msg = '当前JSON共 <b style="color:red">' + keysCount + '</b> 个Key，大于预设值' + options['MAX_JSON_KEYS_NUMBER'] + '，已取消自动格式化；可到54Helper设置页调整此配置！';
                     return alert(msg);
                 }
             }
