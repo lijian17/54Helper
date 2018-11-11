@@ -588,7 +588,7 @@ var BgPageInstance = (function () {
                 //管理右键菜单
                 _createOrRemoveContextMenu();
                 notifyText({
-                    message: '恭喜，FeHelper配置修改成功!',
+                    message: '恭喜，54Helper配置修改成功!',
                     autoClose: 2000
                 });
             }

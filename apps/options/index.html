@@ -10,15 +10,32 @@
 	</head>
 
 	<body>
+		<script language="javascript">
+			function ad_left(){
+				document.getElementById('ad_left').style.display="none";
+			}
+			
+			function ad_right(){
+				document.getElementById('ad_right').style.display="none";
+			}
+		</script>
+		<div class="couplet_ad" id="ad_left">
+			<a target="_blank" href=""><img src="../static/img/alipay.png"></a>
+			<a onClick="ad_left();">关闭</a>
+		</div>
+		<div class="couplet_ad" id="ad_right">
+			<a target="_blank" href=""><img src="../static/img/wxpay.png"></a>
+			<a  onClick="ad_right();">关闭</a>
+		</div>
 
 		<div class="wrapper" id="pageContainer">
 			<div class="panel panel-default" style="margin-bottom: 0px;">
 				<div class="panel-heading">
 					<h3 class="panel-title">
-                <a href="https://github.com/lijian17/54Helper/wiki" target="_blank" class="x-a-high">
-                    <img src="../static/img/icon16.png" alt="54helper"/> 54Helper</a>：配置页
-                <span class="ui-fl-r">当前版本：{{manifest.version}}</span>
-            </h3>
+                		<a href="https://github.com/lijian17/54Helper/wiki" target="_blank" class="x-a-high">
+                    	<img src="../static/img/icon16.png" alt="54helper" style="margin-top: -3px;"/> 54Helper</a>：配置页
+                		<span class="ui-fl-r">当前版本：{{manifest.version}}</span>
+            		</h3>
 				</div>
 			</div>
 			<div class="panel-body mod-code">
