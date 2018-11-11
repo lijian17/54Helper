@@ -22,6 +22,7 @@
     "scripts": [
       "background/detect.js",
       "static/vendor/require/require.js",
+      "page-encoding/index.js",
       "background/index.js"
     ]
   },
@@ -35,7 +36,18 @@
     "activeTab",
     "<all_urls>"
   ],
-  "optional_permissions": ["downloads"],
+  "optional_permissions": [
+    "downloads",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+F"
+      }
+    }
+  },
   "web_accessible_resources": [
     "static/img/icon16.png",
     "static/img/icon48.png",
@@ -71,10 +83,9 @@
     "static/vendor/jquery/jquery-ui.min.css",
     "static/vendor/jquery/jquery-ui.min.js",
     "static/vendor/jquery/jquery.extend.js",
-    "static/vendor/syntaxhighlighter/shCore.js",
-    "static/vendor/syntaxhighlighter/shBrushJScript.js",
-    "static/vendor/syntaxhighlighter/shBrushCss.js",
-    "static/css/syntax-highlighter.css"
+    "static/vendor/json-bigint/index.js",
+    "static/vendor/prism/prism.js",
+    "static/vendor/prism/prism.css"
   ],
   "content_scripts": [
     {
@@ -110,7 +121,7 @@
       "all_frames": false
     }
   ],
-  "content_security_policy": "style-src 'self' 'unsafe-inline';script-src 'self' 'unsafe-eval'; object-src 'self' ",
+  "content_security_policy": "style-src 'self' 'unsafe-inline';script-src 'self' 'unsafe-eval'; object-src 'self' ;",
   "update_url": "https://clients2.google.com/service/update2/crx",
   "homepage_url": "https://github.com/lijian17/54Helper/wiki"
 }
