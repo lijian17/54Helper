@@ -26,7 +26,7 @@
 /* common styles start */
 h1{font-size:1.6em;}
 h2{font-size:1em;}
-a,a:visited{color:#fff;outline:none !important;text-decoration:none;}
+a,a:visited{outline:none !important;text-decoration:none;}
 a img,a:visited img{border:none;}
 textarea{overflow:auto;}
 .left{float:left;}
