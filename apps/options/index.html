@@ -8,6 +8,24 @@
     <script src="../static/vendor/require/require.js"></script>
 </head>
 <body>
+	
+<script language="javascript">
+	function ad_left(){
+		document.getElementById('ad_left').style.display="none";
+	}
+	
+	function ad_right(){
+		document.getElementById('ad_right').style.display="none";
+	}
+</script>
+<div class="couplet_ad" id="ad_left">
+	<a target="_blank" href=""><img src="../static/img/alipay.png"></a>
+	<a onClick="ad_left();">关闭</a>
+</div>
+<div class="couplet_ad" id="ad_right">
+	<a target="_blank" href=""><img src="../static/img/wxpay.png"></a>
+	<a  onClick="ad_right();">关闭</a>
+</div>
 
 <div class="wrapper" id="pageContainer">
     <div class="panel panel-default" style="margin-bottom: 0px;">
