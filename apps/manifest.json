@@ -105,14 +105,14 @@
     },
     {
       "matches": [
-        "http://*.baidufe.com/fehelper/*",
-        "http://*.baidufe.com/fehelper",
-        "http://*.fehelper.com/fehelper/*",
-        "http://*.fehelper.com/fehelper",
-        "https://*.baidufe.com/fehelper/*",
-        "https://*.baidufe.com/fehelper",
-        "https://*.fehelper.com/fehelper/*",
-        "https://*.fehelper.com/fehelper"
+        "http://*.54dxs.net/54helper/*",
+        "http://*.54dxs.net/54helper",
+        "http://*.54helper.com/54helper/*",
+        "http://*.54helper.com/54helper",
+        "https://*.54dxs.net/54helper/*",
+        "https://*.54dxs.net/54helper",
+        "https://*.54helper.com/54helper/*",
+        "https://*.54helper.com/54helper"
       ],
       "js": [
         "content-script/fehelper-only.js"
