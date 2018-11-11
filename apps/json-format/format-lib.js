@@ -128,7 +128,7 @@ let JsonFormatEntrance = (function () {
         if (typeof chrome === 'undefined' || !chrome.permissions) {
             button.click(function (e) {
                 let aLink = $('<a id="btnDownload" target="_blank" title="保存到本地">下载JSON数据</a>');
-                aLink.attr('download', 'FeHelper-' + dt + '.json');
+                aLink.attr('download', '54Helper-' + dt + '.json');
                 aLink.attr('href', URL.createObjectURL(blob));
                 aLink[0].click();
             });
@@ -143,7 +143,7 @@ let JsonFormatEntrance = (function () {
                             url: URL.createObjectURL(blob),
                             saveAs: true,
                             conflictAction: 'overwrite',
-                            filename: 'FeHelper-' + dt + '.json'
+                            filename: '54Helper-' + dt + '.json'
                         });
                     } else {
                         alert('必须接受授权，才能正常下载！');
@@ -209,7 +209,7 @@ let JsonFormatEntrance = (function () {
 
             if (typeof chrome === 'undefined' || !chrome.permissions) {
                 // 下载JSON的简单形式
-                $(this).attr('download', 'FeHelper-' + dt + '.json').attr('href', URL.createObjectURL(blob));
+                $(this).attr('download', '54Helper-' + dt + '.json').attr('href', URL.createObjectURL(blob));
             } else {
                 // 请求权限
                 chrome.permissions.request({
@@ -220,7 +220,7 @@ let JsonFormatEntrance = (function () {
                             url: URL.createObjectURL(blob),
                             saveAs: true,
                             conflictAction: 'overwrite',
-                            filename: 'FeHelper-' + dt + '.json'
+                            filename: '54Helper-' + dt + '.json'
                         });
                     } else {
                         alert('必须接受授权，才能正常下载！');
