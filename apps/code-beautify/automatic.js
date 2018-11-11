@@ -1,5 +1,7 @@
 module.exports = (() => {
 
+    let formattedCodes = '';
+
     /**
      * 代码美化
      */
@@ -7,29 +9,20 @@ module.exports = (() => {
 
         let beauty = txtResult => {
 
+            formattedCodes = txtResult;
             txtResult = txtResult.replace(/>/g, '&gt;').replace(/</g, '&lt;');
-            txtResult = '<pre class="brush: ' + fileType.toLowerCase() + ';toolbar:false;">' + txtResult + '</pre>';
-            document.body.innerHTML = txtResult;
+            txtResult = '<pre class="language-' + fileType.toLowerCase() + ' line-numbers"><code>' + txtResult + '</code></pre>';
+            $('#fehelper_tips').siblings().remove().end().after(txtResult);
 
-            // 代码高亮
-            let map = {
-                core: '../static/vendor/syntaxhighlighter/shCore.js',
-                Javascript: '../static/vendor/syntaxhighlighter/shBrushJScript.js',
-                CSS: '../static/vendor/syntaxhighlighter/shBrushCss.js'
-            };
-
-            Tarp.require(map.core, true).then(SH => {
-                Tarp.require(map[fileType], true).then(SH => {
-                    SH.defaults['toolbar'] = false;
-                    SH.highlight();
-                });
+            Tarp.require('../static/vendor/prism/prism.js', true).then(Prism => {
+                Prism.highlightAll();
+                callback && callback();
             });
 
-            callback && callback();
         };
 
         switch (fileType) {
-            case 'Javascript':
+            case 'javascript':
                 let opts = {
                     brace_style: "collapse",
                     break_chained_methods: false,
@@ -46,7 +39,7 @@ module.exports = (() => {
                 Tarp.require('../code-beautify/beautify.js');
                 js_beautify(source, opts, resp => beauty(resp));
                 break;
-            case 'CSS':
+            case 'css':
                 Tarp.require('../code-beautify/beautify-css.js');
                 css_beautify(source, {}, resp => beauty(resp));
                 break;
@@ -58,13 +51,8 @@ module.exports = (() => {
      * 检测
      * @returns {boolean}
      */
-    let detect = () => {
+    let detect = (fileType) => {
 
-        let ext = location.pathname.substring(location.pathname.lastIndexOf(".") + 1).toLowerCase();
-        let fileType = ({'js': 'Javascript', 'css': 'CSS'})[ext];
-        if (!fileType || document.contentType.toLowerCase() === 'text/html') {
-            return false;
-        }
         let source = document.body.textContent;
 
         let cssUrl = chrome.extension.getURL('code-beautify/automatic.css');
@@ -72,17 +60,20 @@ module.exports = (() => {
         $(document.body).addClass('show-tipsbar');
 
         let tipsBar = $('<div id="fehelper_tips">' +
-            '<span class="desc">54Helper检测到这可能是<i>' + fileType + '</i>代码，是否进行美化处理？</span>' +
+            '<span class="desc">54Helper检测到这可能是<i>' + fileType + '</i>代码，<span class="ask">是否进行美化处理？</span></span>' +
+            '<a class="encoding">有乱码？点击修正！</a>' +
             '<button class="yes">代码美化</button>' +
             '<button class="no">放弃！</button>' +
+            '<button class="copy hide">复制美化过的代码</button>' +
             '<button class="close"><span></span></button>' +
             '<a class="forbid">彻底关闭这个功能！&gt;&gt;</a>' +
             '</div>').prependTo('body');
 
         tipsBar.find('button.yes').click((evt) => {
             tipsBar.find('button.yes,button.no').hide();
-            $('<span class="doing">正在努力，请稍后...</span>').insertBefore(tipsBar.find('button.yes'));
-            format(fileType, source,()=>{
+            let elAsk = tipsBar.find('span.ask').text('正在努力美化，请稍后...');
+            format(fileType, source, () => {
+                elAsk.text('已为您美化完毕！');
                 $(document.body).removeClass('show-tipsbar').addClass('show-beautified');
             });
         });
@@ -95,8 +86,43 @@ module.exports = (() => {
         });
 
         tipsBar.find('button.no,button.close').click((evt) => {
-            $(document.body).removeClass('show-tipsbar');
+            $(document.body).removeClass('show-tipsbar').removeClass('show-beautified');
+            tipsBar.remove();
         });
+
+        tipsBar.find('button.copy').click((evt) => {
+            _copyToClipboard(formattedCodes);
+        });
+
+        tipsBar.find('a.encoding').click((evt) => {
+            evt.preventDefault();
+            fetch(location.href).then(res => res.text()).then(text => {
+                source = text;
+                if ($(document.body).hasClass('show-beautified')) {
+                    tipsBar.find('button.yes').trigger('click');
+                } else {
+                    $('#fehelper_tips+pre').text(text);
+                }
+            });
+        });
+    };
+
+
+    /**
+     * chrome 下复制到剪贴板
+     * @param text
+     */
+    let _copyToClipboard = function (text) {
+        let input = document.createElement('textarea');
+        input.style.position = 'fixed';
+        input.style.opacity = 0;
+        input.value = text;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('Copy');
+        document.body.removeChild(input);
+
+        alert('代码复制成功，随处粘贴可用！')
     };
 
     return {

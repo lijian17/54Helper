@@ -6,6 +6,9 @@ module.exports = (() => {
     // 页面json格式化强制开启
     let MSG_TYPE = Tarp.require('../static/js/msg_type');
 
+    // 默认值：JSON格式化支持的最大key数量
+    let maxJsonKeysNumber = 10000;
+
     // 所有配置项
     let optionItems = [
         'opt_item_contextMenus',
@@ -14,6 +17,7 @@ module.exports = (() => {
         'CODE_BEAUTIFY',
         'CODE_COMPRESS',
         'JSON_FORMAT',
+        'JSON_COMPARE',
         'QR_CODE',
         'COLOR_PICKER',
         'REGEXP_TOOL',
@@ -24,7 +28,12 @@ module.exports = (() => {
         'AJAX_DEBUGGER',
         'JS_CSS_PAGE_BEAUTIFY',
         'HTML_TO_MARKDOWN',
-        'PAGE_CAPTURE'
+        'PAGE_CAPTURE',
+        'RANDOM_PASSWORD',
+        'FORBID_OPEN_IN_NEW_TAB',
+        'MAX_JSON_KEYS_NUMBER',
+        'AUTO_TEXT_DECODE',
+        'STICKY_NOTES'
     ];
 
     /**
@@ -65,7 +74,11 @@ module.exports = (() => {
             let rst = {};
             optionItems.forEach((item) => {
                 let opt = localStorage.getItem(item);
-                if (opt !== 'false') {
+                if (item === 'MAX_JSON_KEYS_NUMBER') {
+                    rst[item] = opt || maxJsonKeysNumber;
+                } else if (typeof(opt) === 'number') {
+                    rst[item] = opt;
+                } else if (opt !== 'false') {
                     rst[item] = 'true';
                 }
             });
@@ -78,8 +91,22 @@ module.exports = (() => {
      * @param {Object} items
      */
     let _setOptsFromBgPage = function (items) {
+
         optionItems.forEach((opt) => {
-            localStorage.setItem(opt, items.indexOf(opt) > -1 ? 'true' : 'false');
+            let found = items.some(it => {
+                if (typeof(it) === 'string' && it === opt) {
+                    localStorage.setItem(opt, 'true');
+                    return true;
+                }
+                else if (typeof(it) === 'object' && it.hasOwnProperty(opt)) {
+                    localStorage.setItem(opt, it[opt]);
+                    return true;
+                }
+                return false;
+            });
+            if (!found) {
+                localStorage.setItem(opt, 'false');
+            }
         });
     };
 

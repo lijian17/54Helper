@@ -69,8 +69,13 @@ const MSG_TYPE = {
     TIME_STAMP: 'timestamp',
     // 图片base64
     IMAGE_BASE64: 'image-base64',
+    // 随机密码生成
+    RANDOM_PASSWORD:'password',
     // 二维码解码
     QR_DECODE: 'qr-decode',
+
+    // JSON比对
+    JSON_COMPARE:'json-diff',
     // JSON页面自动格式化
     JSON_PAGE_FORMAT: 'JSON_PAGE_FORMAT',
     JSON_PAGE_FORMAT_REQUEST: 'JSON_PAGE_FORMAT_REQUEST',
@@ -87,6 +92,9 @@ const MSG_TYPE = {
     PAGE_CAPTURE:'page-capture',
     PAGE_CAPTURE_SCROLL:"page_capture_scroll",
     PAGE_CAPTURE_CAPTURE:"page_capture_capture",
+
+    // 便签几笔
+    STICKY_NOTES: 'sticky-notes',
 
     // dev tools页面
     DEV_TOOLS: 'dev-tools',

@@ -1,50 +1,61 @@
-<!DOCTYPE html>
-<html>
-
-	<head>
-		<meta charset="UTF-8">
-		<title>Json格式化查看工具</title>
-		<link rel="stylesheet" href="index.css" />
-		<script type="text/javascript" src="../static/vendor/vue/vue.js"></script>
-		<script type="text/javascript" src="../static/vendor/require/require.js"></script>
-	</head>
-
-	<body>
-		<div class="wrapper wp-json" id="pageContainer">
-			<div class="panel panel-default" style="margin-bottom: 0px;">
-				<div class="panel-heading">
-					<h3 class="panel-title">
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+        <title>JSON格式化查看工具</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="index.css" />
+        <script type="text/javascript" src="../static/vendor/vue/vue.js"></script>
+        <script src="../static/vendor/require/require.js"></script>
+    </head>
+    <body>
+        <div class="wrapper wp-json" id="pageContainer">
+            <div class="panel panel-default" style="margin-bottom: 0px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
                         <a href="https://github.com/lijian17/54Helper/wiki" target="_blank" class="x-a-high">
                             <img src="../static/img/icon16.png" alt="54helper"/> 54Helper</a>：JSON格式化查看
                         <span class="x-xdemo" ref="demoLink1" @click="setDemo">示例1：JSON片段</span>
-                        <a class="x-xdemo" href="https://www.sojson.com/open/api/weather/json.shtml?city=%E5%8C%97%E4%BA%AC" target="_blank">示例2：在线JSON-1</a>
-                        <a class="x-xdemo" href="https://suggest.taobao.com/sug?code=utf-8&q=iphonex&callback=thisIsACallbackFunction" target="_blank">示例3：在线JSON-2</a></h3>
-				</div>
-			</div>
+                        <a class="x-xdemo" href="http://baike.baidu.com/api/openapi/BaikeLemmaCardApi?scope=103&format=json&appid=379020&bk_key=%E9%93%B6%E9%AD%82&bk_length=600" target="_blank">示例2：在线JSON-1</a>
 
-			<div class="panel-body mod-json">
-				<div class="row panel-txt">
-					<textarea class="form-control mod-textarea" id="jsonSource" placeholder="在这里粘贴您需要进行格式化的JSON代码" ref="jsonBox" v-model="jsonSource" @input="format"></textarea>
-					<div><button id="btnFormat" class="btn btn-primary ui-mt-10" @click="format">格式化</button><span id="errorMsg" v-html="errorMsg"></span></div>
-				</div>
+                        <span id="layoutBar">
+                            <button id="btnLeftRight" ref="btnLeftRight" class="selected" @click="changeLayout('left-right')">左右布局</button><button id="btnUpDown" ref="btnUpDown" @click="changeLayout('up-down')">上下布局</button>
+                        </span>
+                    </h3>
+                </div>
+            </div>
 
-				<div class="row rst-item" id="modJsonResult">
-					<div id="formattingMsg">
-						<svg id="spinner" width="16" height="16" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" version="1.1">
-							<path d="M 150,0 a 150,150 0 0,1 106.066,256.066 l -35.355,-35.355 a -100,-100 0 0,0 -70.711,-170.711 z" fill="#3d7fe6"></path>
-						</svg>
-						加载中...
-					</div>
-					<div id="jfCallbackName_start" class="callback-name">{{jfCallbackName_start}}</div>
-					<div id="jfContent" v-html="resultContent"></div>
-					<pre id="jfContent_pre"></pre>
-					<div id="jfCallbackName_end" class="callback-name">{{jfCallbackName_end}}</div>
-				</div>
-			</div>
+            <div class="panel-body mod-json" ref="panelBody">
+                <div class="row panel-txt">
+                    <textarea class="form-control mod-textarea" id="jsonSource" placeholder="在这里粘贴您需要进行格式化的JSON代码" ref="jsonBox"></textarea>
+                    <div class="ui-mt-10">
+                        <button id="btnFormat" class="btn btn-primary" @click="format">格式化</button>
+                        <button id="btnCompress" class="btn btn-success" @click="compress">压缩</button>
+                        <input type="checkbox" v-model="jsonLintSwitch" id="jsonLint" @click="lintOn"><label for="jsonLint">开启JSONLint</label>
+                        <input type="checkbox" v-model="overrideJson" id="jsonOvrd" @click="setCache"><label for="jsonOvrd">点选JSON项时默认进行编辑</label>
+                    </div>
+                    <div id="errorTips" v-bind:style="{display:showTips?'block':'none'}">
+                        <div id="errorBtn" @click="closeTips"><span id="closeError">☓</span></div>
+                        <div id="tipsBox" v-html="errorPos"></div>
+                        <div id="errorCode" v-html="errorJsonCode"></div>
+                    </div>
+                </div>
 
-		</div>
-		<script src="../static/vendor/jquery/jquery-3.3.1.min.js"></script>
-		<script src="index.js"></script>
-	</body>
+                <div class="row rst-item" id="modJsonResult">
+                    <div id="formattingMsg"><span class="x-loading"></span>格式化中...</div>
+                    <div id="jfCallbackName_start" class="callback-name" v-html="jfCallbackName_start"></div>
+                    <div id="jfContent" v-html="resultContent"></div>
+                    <pre id="jfContent_pre"></pre>
+                    <div id="jfCallbackName_end" class="callback-name" v-html="jfCallbackName_end"></div>
+                </div>
+            </div>
 
+        </div>
+        <script src="../static/vendor/jquery/jquery-3.3.1.min.js"></script>
+        <script src="../static/vendor/codemirror/codemirror.js"></script>
+        <script src="../static/vendor/codemirror/javascript.js"></script>
+        <script src="../static/vendor/codemirror/active-line.js"></script>
+        <script src="../static/vendor/codemirror/matchbrackets.js"></script>
+        <script src="../static/vendor/codemirror/placeholder.js"></script>
+        <script src="index.js"></script>
+    </body>
 </html>
