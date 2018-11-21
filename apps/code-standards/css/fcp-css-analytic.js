@@ -23,7 +23,7 @@ baidu.namespace.register("baidu.cssAnalytic");
  * 	13、filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="ds_laby.png", sizingMethod='crop')  //ie下的filter，有（和)
  * 
  * @author lichengyin （FCP：PHP代码）
- * @cover zhaoxianlie （FCPHelper：将PHP代码重写为Javascript代码）
+ * @cover lijian （FCPHelper：将PHP代码重写为Javascript代码）
  */
 baidu.cssAnalytic = function(){
 	/**

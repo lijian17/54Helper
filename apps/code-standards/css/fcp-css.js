@@ -5,7 +5,7 @@ baidu.namespace.register("baidu.css");
 
 /**
  * css相关处理
- * @author zhaoxianlie 
+ * @author lijian 
  */
 baidu.css = (function(){
 	
@@ -645,3 +645,4 @@ baidu.css = (function(){
 	};
 	
 })();
+
