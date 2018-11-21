@@ -46,32 +46,58 @@
             <label for="opt_item_contextMenus">将 54Helper 添加到右键菜单</label> <br/>
 
             <input type="checkbox" value="FORBID_OPEN_IN_NEW_TAB" id="FORBID_OPEN_IN_NEW_TAB" v-model="selectedOpts"/>
-            <label for="FORBID_OPEN_IN_NEW_TAB">禁止在新 Tab页/窗口 打开同一个工具</label>
+            <label for="FORBID_OPEN_IN_NEW_TAB">禁止在新 Tab页/窗口 打开同一个工具</label> <br/>
+
+            <input type="checkbox" value="JSON_PAGE_FORMAT" id="JSON_PAGE_FORMAT" v-model="selectedOpts"/>
+            <label for="JSON_PAGE_FORMAT">JSON自动美化（页面<b><i>自动检测并格式化</i></b>）</label> <br/>
+
+            <div class="box-inner row ui-ml-20" :class="{'x-disabled':!selectedOpts.includes('JSON_PAGE_FORMAT')}">
+                <div class="row-line">
+                    <input type="number" class="form-control" id="MAX_JSON_KEYS_NUMBER"
+                           v-model="maxJsonKeysNumber" :disabled="!selectedOpts.includes('JSON_PAGE_FORMAT')"/>
+                    <label for="MAX_JSON_KEYS_NUMBER">JSON最大长度（能支持的JSON所有Key数量，<b><i>太大可能会卡</i></b>）</label>
+                </div>
+                <div class="row-line">
+                    <input type="checkbox" class="" id="AUTO_TEXT_DECODE"
+                           v-model="auto_text_decode" :disabled="!selectedOpts.includes('JSON_PAGE_FORMAT')"/>
+                    <label for="AUTO_TEXT_DECODE">文本自动解码（比如URL自动解码、Unicode自动解码）</label>
+                </div>
+            </div>
         </div>
+
+        <div class="row ui-mt-10">
+            <h4># 配置右键菜单</h4>
+            
+            <div class="row ct-menu" :class="{'x-disabled':!selectedOpts.includes('opt_item_contextMenus')}">
+                <ul class="ul-menu clearfix">
+                    <li v-for="item in Object.keys(menuOpts)">
+                        <input type="checkbox" :id="item" v-bind:value="item" v-model="selectedMenu"
+                               :disabled="!selectedOpts.includes('opt_item_contextMenus')"/>
+                        <label :for="item" v-html="menuOpts[item].text"></label>
+                    </li>
+                </ul>
+                <div class="box-mpreview">
+                    <h5># 右键菜单实时预览</h5>
+                    <img src="menu-bg.png" alt="menu">
+                    <ul class="x-menus">
+                        <template v-for="m in selectedMenu">
+                            <li v-html="menuOpts[m].icon + '  ' + menuOpts[m].text"></li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <div class="row ui-mt-10">
 
-            <h4># 启用相关功能</h4>
+            <h4># 配置功能菜单</h4>
 
-            <div class="row">
+            <div class="row ct-popup">
 
-                <div class="col-md-8">
+                <div class="col-md-8 ct-fun">
 
                     <fieldset>
                         <legend>JSON相关</legend>
-                        <input type="checkbox" value="JSON_PAGE_FORMAT" id="JSON_PAGE_FORMAT" v-model="selectedOpts"/>
-                        <label for="JSON_PAGE_FORMAT">JSON自动美化（页面<b><i>自动检测并格式化</i></b>）</label> <br/>
-
-                        <div class="box-inner row ui-ml-20" :class="{'x-disabled':!selectedOpts.includes('JSON_PAGE_FORMAT')}">
-                            <div class="row-line">
-                                <input type="number" class="form-control" id="MAX_JSON_KEYS_NUMBER" v-model="maxJsonKeysNumber" :disabled="!selectedOpts.includes('JSON_PAGE_FORMAT')"/>
-                                <label for="MAX_JSON_KEYS_NUMBER">JSON最大长度（能支持的JSON所有Key数量，<b><i>太大可能会卡</i></b>）</label>
-                            </div>
-                            <div class="row-line">
-                                <input type="checkbox" class="" id="AUTO_TEXT_DECODE" v-model="auto_text_decode" :disabled="!selectedOpts.includes('JSON_PAGE_FORMAT')"/>
-                                <label for="AUTO_TEXT_DECODE">文本自动解码（比如URL自动解码、Unicode自动解码）</label>
-                            </div>
-
-                        </div>
 
                         <input type="checkbox" value="JSON_FORMAT" id="JSON_FORMAT" v-model="selectedOpts"/>
                         <label for="JSON_FORMAT">JSON手动美化（粘贴文本、手动格式化）</label> <br/>
@@ -159,7 +185,7 @@
                 </div>
 
                 <div class="col-md-4 box-preview">
-                    <h5># 实时预览</h5>
+                    <h5># Popup实时预览</h5>
                     <div class="fe-whole-page">
                         <div class="fe-function-title">54Helper<span>(V{{manifest.version}})</span></div>
                         <ul class="fe-function-list">
