@@ -12,7 +12,7 @@ Tarp.require('../static/vendor/json-bigint/index');
 new Vue({
     el: '#pageContainer',
     data: {
-        defaultResultTpl: '<div class="x-placeholder"><img src="./json-demo.jpg" alt="json-placeholder"></div>',
+        defaultResultTpl: '<div class="x-placeholder"><img src="./json-demo.png" alt="json-placeholder"></div>',
         resultContent: '',
         jsonFormattedSource: '',
         errorMsg: '',
