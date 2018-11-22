@@ -398,7 +398,7 @@ var BgPageInstance = (function () {
     let _createContextMenu = function () {
         _removeContextMenu();
         feHelper.contextMenuId = chrome.contextMenus.create({
-            title: "FeHelper工具",
+            title: "54Helper工具",
             contexts: ['page', 'selection', 'editable', 'link', 'image'],
             documentUrlPatterns: ['http://*/*', 'https://*/*', 'file://*/*']
         });
