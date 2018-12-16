@@ -51,6 +51,7 @@ ul.fe-function-list li:last-child {
     border-bottom: none;
 }
 
+ul.fe-function-list li.x-hovered,
 ul.fe-function-list li:hover {
     color: #ff3C11;
     background: #f1f1f1;
@@ -149,6 +150,9 @@ ul.fe-function-list li.-x-jsondiff b {
 }
 ul.fe-function-list li.-x-sticky-notes b {
     background-position: -65px -96px;
+}
+ul.fe-function-list li.-x-grid-ruler b {
+    background-position: -33px -127px;
 }
 
 
