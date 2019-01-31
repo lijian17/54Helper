@@ -297,7 +297,7 @@ module.exports = function (MSG_TYPE) {
         } else {
             name = '';
         }
-        return 'fehelper' + name + '-' + Date.now() + '.png';
+        return '54helper' + name + '-' + Date.now() + '.png';
     }
 
     /**
