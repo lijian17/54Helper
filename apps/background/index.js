@@ -238,9 +238,9 @@ var BgPageInstance = (function () {
     /**
      * 屏幕栅格标尺
      */
-    let _doGridDetect = function(tab){
+    let _doGridDetect = function (tab) {
         chrome.tabs.sendMessage(tab.id, {
-            type : MSG_TYPE.GRID_RULER
+            type: MSG_TYPE.GRID_RULER
         });
     };
 
@@ -286,6 +286,104 @@ var BgPageInstance = (function () {
     };
 
     /**
+     * 检测Google chrome服务能不能访问，在2s内检测心跳
+     * @param success
+     * @param failure
+     */
+    let detectGoogleDotCom = function (success, failure) {
+        Promise.race([
+            fetch('https://clients2.google.com/service/update2/crx'),
+            new Promise(function (resolve, reject) {
+                setTimeout(() => reject(new Error('request timeout')), 2000)
+            })])
+            .then((data) => {
+                success && success();
+            }).catch(() => {
+            failure && failure();
+        });
+    };
+
+    /**
+     * 从google官方渠道下载chrome扩展
+     * @param crxId 需要下载的extension id
+     * @param crxName 扩展名称
+     * @param callback 下载动作结束后的回调
+     */
+    let downloadCrxFileByCrxId = function (crxId, crxName, callback) {
+        detectGoogleDotCom(() => {
+            // google可以正常访问，则正常下载
+            let url = "https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&x=id%3D"
+                + crxId + "%26uc&prodversion=" + navigator.userAgent.split("Chrome/")[1].split(" ")[0];
+            if (!chrome.downloads) {
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = crxName || (crxId + '.crx');
+                (document.body || document.documentElement).appendChild(a);
+                a.click();
+                a.remove();
+            } else {
+                chrome.downloads.download({
+                    url: url,
+                    filename: crxName || crxId,
+                    conflictAction: 'overwrite',
+                    saveAs: true
+                }, function (downloadId) {
+                    if (chrome.runtime.lastError) {
+                        alert('抱歉，下载失败！错误信息：' + chrome.runtime.lastError.message);
+                    }
+                });
+            }
+        }, () => {
+            // google不能正常访问
+            callback ? callback() : alert('抱歉，下载失败！');
+        });
+
+    };
+
+    /**
+     * 从chrome webstore下载crx文件
+     * 在chrome extension详情页使用
+     */
+    let downloadCrxFileFromWebStoreDetailPage = function (callback) {
+
+        chrome.tabs.getSelected(null, function (tab) {
+            let crxId = tab.url.split("/")[6].split('?')[0];
+            let crxName = tab.title.split(" - Chrome")[0] + ".crx";
+            crxName = crxName.replace(/[&\/\\:"*<>|?]/g, '');
+
+            downloadCrxFileByCrxId(crxId, crxName, callback);
+        });
+    };
+
+    /**
+     * 通过右键菜单下载或者分享crx
+     * @param tab
+     * @private
+     */
+    let _downloadCrx = function (tab) {
+        let isWebStoreDetailPage = tab.url.indexOf('https://chrome.google.com/webstore/detail/') === 0;
+        if (isWebStoreDetailPage) {
+            // 如果是某个chrome extension的详情页面了，直接下载当前crx文件
+            downloadCrxFileFromWebStoreDetailPage(() => {
+                alert('下载失败，可能是当前网络无法访问Google站点！');
+            });
+        } else {
+            // 否则，下载54Helper并分享出去：ID：okpjnkmjijbnffoifemfjenibaehjdlk
+            // 54Helper.manifest.name
+            if (confirm('下载最新版【54Helper】并分享给其他小伙伴儿，走你~~~')) {
+                let crxId = MSG_TYPE.STABLE_EXTENSION_ID;
+                let crxName = 54Helper.manifest.name + '- latestVersion.crx';
+
+                downloadCrxFileByCrxId(crxId, crxName, () => {
+                    chrome.tabs.create({
+                        url: MSG_TYPE.DOWNLOAD_FROM_GITHUB
+                    });
+                });
+            }
+        }
+    };
+
+    /**
      * 右键菜单创建工具
      * @param menuList
      * @private
@@ -296,7 +394,7 @@ var BgPageInstance = (function () {
         menuList.forEach(m => {
             if (m === 'MENU_PAGE_ENCODING') {
                 // 网页编码设置的menu
-                PageEncoding.createMenu(feHelper.contextMenuId, menus.MENU_PAGE_ENCODING);
+                PageEncoding.createMenu(54Helper.contextMenuId, menus.MENU_PAGE_ENCODING);
             } else {
                 let onClick = {
                     MENU_QRCODE_CREATE: function (info, tab) {
@@ -392,18 +490,21 @@ var BgPageInstance = (function () {
                     MENU_STICKY_NOTE: function (info, tab) {
                         _openFileAndRun(tab, MSG_TYPE.STICKY_NOTES);
                     },
-                    MENU_REMOVE_BG: function(info,tab){
+                    MENU_REMOVE_BG: function (info, tab) {
                         _openFileAndRun(tab, MSG_TYPE.REMOVE_BG);
                     },
-                    MENU_GRID_RULER: function(info,tab){
+                    MENU_GRID_RULER: function (info, tab) {
                         _doGridDetect(tab);
+                    },
+                    MENU_DOWNLOAD_CRX: function (info, tab) {
+                        _downloadCrx(tab);
                     }
                 };
 
                 chrome.contextMenus.create({
                     title: menus[m].icon + '  ' + menus[m].text,
                     contexts: menus[m].contexts || ['all'],
-                    parentId: feHelper.contextMenuId,
+                    parentId: 54elper.contextMenuId,
                     onclick: onClick[m]
                 });
 
@@ -416,7 +517,7 @@ var BgPageInstance = (function () {
      */
     let _createContextMenu = function () {
         _removeContextMenu();
-        feHelper.contextMenuId = chrome.contextMenus.create({
+        54Helper.contextMenuId = chrome.contextMenus.create({
             title: "54Helper工具",
             contexts: ['page', 'selection', 'editable', 'link', 'image'],
             documentUrlPatterns: ['http://*/*', 'https://*/*', 'file://*/*']
@@ -436,9 +537,9 @@ var BgPageInstance = (function () {
      * 移除扩展专属的右键菜单
      */
     let _removeContextMenu = function () {
-        if (!feHelper.contextMenuId) return;
-        chrome.contextMenus.remove(feHelper.contextMenuId);
-        feHelper.contextMenuId = null;
+        if (!54Helper.contextMenuId) return;
+        chrome.contextMenus.remove(54Helper.contextMenuId);
+        54Helper.contextMenuId = null;
     };
 
     /**
@@ -637,7 +738,7 @@ var BgPageInstance = (function () {
                 });
             }
             // 判断菜单是否保存过
-            else if(request.type === MSG_TYPE.MENU_SAVED){
+            else if (request.type === MSG_TYPE.MENU_SAVED) {
                 Settings.didMenuSettingSaved(callback);
             }
             //判断是否可以针对json页面进行自动格式化
@@ -669,7 +770,7 @@ var BgPageInstance = (function () {
                 chrome.runtime.openOptionsPage();
             }
             // 开启remove-bg功能
-            else if(request.type === MSG_TYPE.REMOVE_PERSON_IMG_BG) {
+            else if (request.type === MSG_TYPE.REMOVE_PERSON_IMG_BG) {
                 Tarp.require('../remove-bg/proxy').addBackgroundRemoveListener(callback);
             }
 
@@ -754,7 +855,7 @@ var BgPageInstance = (function () {
             }
         });
         // 卸载
-        chrome.runtime.setUninstallURL(feHelper.manifest.homepage_url);
+        chrome.runtime.setUninstallURL(54Helper.manifest.homepage_url);
     };
 
     /**
