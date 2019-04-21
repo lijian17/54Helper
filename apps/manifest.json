@@ -133,7 +133,7 @@
       "all_frames": true
     }
   ],
-  "content_security_policy": "style-src 'self' 'unsafe-inline';script-src 'self' 'unsafe-eval'; object-src 'self' ;",
+  "content_security_policy": "style-src 'self' 'unsafe-inline';script-src 'self' 'unsafe-eval'; object-src 'self' ; media-src 'self' filesystem:",
   "update_url": "https://clients2.google.com/service/update2/crx",
   "homepage_url": "https://github.com/lijian17/54Helper/wiki"
 }
