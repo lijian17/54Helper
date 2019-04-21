@@ -26,3 +26,9 @@
 - 网页编码设置（UTF-8、GBK、日文、韩文等）
 - 我的便签笔记（便签笔记，支持导出）
 - 人像背景移除（将人物照片中的背景移除：抠图工具）
+
+## 二、安装方法 
+1. 下载当前最新版[*.crx](https://github.com/lijian17/54Helper/releases)
+1. chrome浏览器地址栏输入：[chrome://extensions/](chrome://extensions/) 并打开
+2. 右上角开启`开发者模式`
+3. 拖拽crx到当前页面，完成安装
