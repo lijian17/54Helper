@@ -9,7 +9,7 @@ var BgPageInstance = (function () {
     let Network = Tarp.require('../background/network');
     let PageCapture = Tarp.require('../page-capture/capture-api')(MSG_TYPE);
 
-    let feHelper = {
+    let c54Helper = {
         codeStandardMgr: {},
         ajaxDebuggerMgr: {},
         csDetectIntervals: [],
@@ -23,12 +23,12 @@ var BgPageInstance = (function () {
 
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             let tabId = tabs[0].id;
-            feHelper.codeStandardMgr[tabId][getType] = true;
+            c54Helper.codeStandardMgr[tabId][getType] = true;
 
-            if (feHelper.codeStandardMgr[tabId].css && feHelper.codeStandardMgr[tabId].js) {
-                feHelper.codeStandardMgr[tabId].allDone = true;
+            if (c54Helper.codeStandardMgr[tabId].css && c54Helper.codeStandardMgr[tabId].js) {
+                c54Helper.codeStandardMgr[tabId].allDone = true;
             }
-            if (feHelper.codeStandardMgr[tabId].allDone && typeof callback === 'function') {
+            if (c54Helper.codeStandardMgr[tabId].allDone && typeof callback === 'function') {
                 callback();
             }
         });
@@ -39,15 +39,15 @@ var BgPageInstance = (function () {
      * 执行前端FCPHelper检测
      */
     let _doFcpDetect = function (tab) {
-        feHelper.codeStandardMgr[tab.id] = feHelper.codeStandardMgr[tab.id] || {};
+        c54Helper.codeStandardMgr[tab.id] = c54Helper.codeStandardMgr[tab.id] || {};
         //所有元素都准备就绪
-        if (feHelper.codeStandardMgr[tab.id].allDone) {
-            clearInterval(feHelper.csDetectIntervals[tab.id]);
+        if (c54Helper.codeStandardMgr[tab.id].allDone) {
+            clearInterval(c54Helper.csDetectIntervals[tab.id]);
             chrome.tabs.sendMessage(tab.id, {
                 type: MSG_TYPE.CODE_STANDARDS,
                 event: MSG_TYPE.FCP_HELPER_DETECT
             });
-        } else if (feHelper.csDetectIntervals[tab.id] === undefined) {
+        } else if (c54Helper.csDetectIntervals[tab.id] === undefined) {
             chrome.tabs.sendMessage(tab.id, {
                 type: MSG_TYPE.CODE_STANDARDS,
                 event: MSG_TYPE.FCP_HELPER_INIT
@@ -56,7 +56,7 @@ var BgPageInstance = (function () {
             notifyText({
                 message: "正在准备数据，请稍等..."
             });
-            feHelper.csDetectIntervals[tab.id] = setInterval(function () {
+            c54Helper.csDetectIntervals[tab.id] = setInterval(function () {
                 _doFcpDetect(tab);
             }, 200);
         }
@@ -74,7 +74,7 @@ var BgPageInstance = (function () {
     let notifyText = function (options) {
         let notifyId = 'fehleper-notify-id';
 
-        clearTimeout(feHelper.notifyTimeoutId);
+        clearTimeout(c54Helper.notifyTimeoutId);
         if (options.closeImmediately) {
             return chrome.notifications.clear(notifyId);
         }
@@ -92,7 +92,7 @@ var BgPageInstance = (function () {
             message: options.message
         });
 
-        feHelper.notifyTimeoutId = setTimeout(() => {
+        c54Helper.notifyTimeoutId = setTimeout(() => {
             chrome.notifications.clear(notifyId);
         }, parseInt(options.autoClose || 3000, 10));
 
@@ -197,10 +197,10 @@ var BgPageInstance = (function () {
     let _debuggerSwitchOn = function (callback) {
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             let tab = tabs[0];
-            feHelper.ajaxDebuggerMgr[tab.id] = !feHelper.ajaxDebuggerMgr[tab.id];
+            c54Helper.ajaxDebuggerMgr[tab.id] = !c54Helper.ajaxDebuggerMgr[tab.id];
 
             chrome.tabs.executeScript(tab.id, {
-                code: 'console.info("54Helper提醒：Ajax Debugger开关已' + (feHelper.ajaxDebuggerMgr[tab.id] ? '开启' : '关闭') + '！");',
+                code: 'console.info("54Helper提醒：Ajax Debugger开关已' + (c54Helper.ajaxDebuggerMgr[tab.id] ? '开启' : '关闭') + '！");',
                 allFrames: false
             });
             callback && callback();
@@ -217,11 +217,11 @@ var BgPageInstance = (function () {
 
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             let tab = tabs[0];
-            callback && callback(feHelper.ajaxDebuggerMgr[tab.id]);
+            callback && callback(c54Helper.ajaxDebuggerMgr[tab.id]);
 
             if (withAlert) {
                 let msg = '';
-                if (feHelper.ajaxDebuggerMgr[tab.id]) {
+                if (c54Helper.ajaxDebuggerMgr[tab.id]) {
                     if (devToolsDetected) {
                         msg = 'DevTools已打开，确保已切换到【Console】界面，并关注信息输出，愉快的进行Ajax Debugger！'
                     } else {
@@ -369,10 +369,10 @@ var BgPageInstance = (function () {
             });
         } else {
             // 否则，下载54Helper并分享出去：ID：okpjnkmjijbnffoifemfjenibaehjdlk
-            // 54Helper.manifest.name
+            // c54Helper.manifest.name
             if (confirm('下载最新版【54Helper】并分享给其他小伙伴儿，走你~~~')) {
                 let crxId = MSG_TYPE.STABLE_EXTENSION_ID;
-                let crxName = 54Helper.manifest.name + '- latestVersion.crx';
+                let crxName = c54Helper.manifest.name + '- latestVersion.crx';
 
                 downloadCrxFileByCrxId(crxId, crxName, () => {
                     chrome.tabs.create({
@@ -394,7 +394,7 @@ var BgPageInstance = (function () {
         menuList.forEach(m => {
             if (m === 'MENU_PAGE_ENCODING') {
                 // 网页编码设置的menu
-                PageEncoding.createMenu(54Helper.contextMenuId, menus.MENU_PAGE_ENCODING);
+                PageEncoding.createMenu(c54Helper.contextMenuId, menus.MENU_PAGE_ENCODING);
             } else {
                 let onClick = {
                     MENU_QRCODE_CREATE: function (info, tab) {
@@ -504,7 +504,7 @@ var BgPageInstance = (function () {
                 chrome.contextMenus.create({
                     title: menus[m].icon + '  ' + menus[m].text,
                     contexts: menus[m].contexts || ['all'],
-                    parentId: 54elper.contextMenuId,
+                    parentId: c54Helper.contextMenuId,
                     onclick: onClick[m]
                 });
 
@@ -517,7 +517,7 @@ var BgPageInstance = (function () {
      */
     let _createContextMenu = function () {
         _removeContextMenu();
-        54Helper.contextMenuId = chrome.contextMenus.create({
+        c54Helper.contextMenuId = chrome.contextMenus.create({
             title: "54Helper工具",
             contexts: ['page', 'selection', 'editable', 'link', 'image'],
             documentUrlPatterns: ['http://*/*', 'https://*/*', 'file://*/*']
@@ -537,9 +537,9 @@ var BgPageInstance = (function () {
      * 移除扩展专属的右键菜单
      */
     let _removeContextMenu = function () {
-        if (!54Helper.contextMenuId) return;
-        chrome.contextMenus.remove(54Helper.contextMenuId);
-        54Helper.contextMenuId = null;
+        if (!c54Helper.contextMenuId) return;
+        chrome.contextMenus.remove(c54Helper.contextMenuId);
+        c54Helper.contextMenuId = null;
     };
 
     /**
@@ -855,7 +855,7 @@ var BgPageInstance = (function () {
             }
         });
         // 卸载
-        chrome.runtime.setUninstallURL(54Helper.manifest.homepage_url);
+        chrome.runtime.setUninstallURL(c54Helper.manifest.homepage_url);
     };
 
     /**
