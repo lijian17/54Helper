@@ -23,7 +23,8 @@
       "background/detect.js",
       "static/vendor/require/require.js",
       "page-encoding/index.js",
-      "background/index.js"
+      "background/index.js",
+      "octotree/background.js"
     ]
   },
   "options_page": "options/index.html",
@@ -34,12 +35,15 @@
     "cookies",
     "notifications",
     "activeTab",
-    "<all_urls>"
+    "<all_urls>",
+    "https://api.github.com/*",
+    "storage"
   ],
   "optional_permissions": [
     "downloads",
     "webRequest",
-    "webRequestBlocking"
+    "webRequestBlocking",
+    "<all_urls>"
   ],
   "commands": {
     "_execute_browser_action": {
@@ -87,7 +91,10 @@
     "static/vendor/prism/prism.js",
     "static/vendor/prism/prism.css",
     "ruler/index.js",
-    "ruler/index.css"
+    "ruler/index.css",
+    "*.woff2",
+    "*.png",
+    "*.gif"
   ],
   "content_scripts": [
     {
@@ -131,6 +138,12 @@
       ],
       "run_at": "document_end",
       "all_frames": true
+    },
+    {
+      "run_at": "document_start",
+      "matches": ["https://github.com/*"],
+      "js": ["octotree/content.js"],
+      "css": ["octotree/content.css"]
     }
   ],
   "content_security_policy": "style-src 'self' 'unsafe-inline';script-src 'self' 'unsafe-eval'; object-src 'self' ; media-src 'self' filesystem:",
