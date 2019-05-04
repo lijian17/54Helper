@@ -186,6 +186,9 @@
 
                         <input type="checkbox" value="AJAX_DEBUGGER" id="AJAX_DEBUGGER" v-model="selectedOpts"/>
                         <label for="AJAX_DEBUGGER">Ajax调试功能（需在控制台中使用）</label> <br/>
+
+                        <input type="checkbox" value="MULTI_TOOLKIT" id="MULTI_TOOLKIT" v-model="selectedOpts"/>
+                        <label for="MULTI_TOOLKIT">多维小工具集（进制转换、RGB/HEX颜色转换等）</label> <br/>
                     </fieldset>
 
 
@@ -241,6 +244,8 @@
                                 <b></b>Ajax调试:<i>关闭</i></li>
                             <li class="-x-sticky-notes" v-if="selectedOpts.includes('STICKY_NOTES')">
                                 <b></b>我的便签笔记</li>
+                            <li class="-x-multi-toolkit" v-if="selectedOpts.includes('MULTI_TOOLKIT')">
+                                <b></b>多维小工具集</li>
                             <li class="-x-remove-bg" v-if="selectedOpts.includes('REMOVE_BG')">
                                 <b></b>人像背景移除</li>
                         </ul>
