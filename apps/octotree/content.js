@@ -2757,8 +2757,8 @@ const TEMPLATE = '<div>\n' +
     '        </form>\n' +
     '\n' +
     '        <div class="octotree-ad-big">\n' +
-    '          <div>Octotree Pro的特点</div>\n' +
-    '          <ul>\n' +
+    '          <div style="display: none;">Octotree Pro的特点</div>\n' +
+    '          <ul style="display: none;">\n' +
     '            <li>Dark模式</li>\n' +
     '            <li>文件搜索</li>\n' +
     '            <li>更改停靠位置</li>\n' +
@@ -2766,7 +2766,7 @@ const TEMPLATE = '<div>\n' +
     '            <li>多个Github帐户</li>\n' +
     '            <li>Safari浏览器支持</li>\n' +
     '          </ul>\n' +
-    '          <div>\n' +
+    '          <div style="display: none;">\n' +
     '            <a href="https://54dxs.cn/www/html/games/" target="_blank">\n' +
     '              <i class="octotree-icon-github"></i>在我们的网站上了解更多\n' +
     '            </a>\n' +
