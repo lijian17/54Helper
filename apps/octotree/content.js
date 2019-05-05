@@ -2656,7 +2656,7 @@ $.support.pjax ? enable() : disable()
 const TEMPLATE = '<div>\n' +
     '  <nav class="octotree-sidebar">\n' +
     '    <div class="octotree-toggle">\n' +
-    '      <i class="octotree-toggle-icon" role="button"></i> <span>Octotree</span>\n' +
+    '      <i class="octotree-toggle-icon" role="button"></i> <span>54Helper</span>\n' +
     '\n' +
     '      <div class="popup">\n' +
     '        <div class="arrow"></div>\n' +
