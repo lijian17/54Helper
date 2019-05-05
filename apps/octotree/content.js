@@ -2668,11 +2668,11 @@ const TEMPLATE = '<div>\n' +
     '    </div>\n' +
     '\n' +
     '    <a class="octotree-pin" data-store="PINNED" href="javascript:void(0)">\n' +
-    '      <span class="tooltipped tooltipped-s" aria-label="Pin this sidebar"> <i class="octotree-icon-pin"></i> </span>\n' +
+    '      <span class="tooltipped tooltipped-s" aria-label="固定边栏"> <i class="octotree-icon-pin"></i> </span>\n' +
     '    </a>\n' +
     '\n' +
     '    <a class="octotree-settings" href="javascript:void(0)">\n' +
-    '      <span class="tooltipped tooltipped-s" aria-label="Settings"> <i class="octotree-icon-settings"></i> </span>\n' +
+    '      <span class="tooltipped tooltipped-s" aria-label="设置"> <i class="octotree-icon-settings"></i> </span>\n' +
     '    </a>\n' +
     '\n' +
     '    <div class="octotree-views">\n' +
