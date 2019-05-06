@@ -13,6 +13,7 @@ module.exports = (() => {
     let optionItems = [
         'opt_item_contextMenus',
         'JSON_PAGE_FORMAT',
+        'GITHUB_CODE_OCTOTREE',
         'EN_DECODE',
         'CODE_BEAUTIFY',
         'CODE_COMPRESS',
@@ -47,7 +48,7 @@ module.exports = (() => {
         'MENU_REMOVE_BG'
     ];
 
-    // 邮件菜单配置项
+    // 右键菜单配置项
     let menuOptions = {
         MENU_PAGE_ENCODING: {
             icon: '↺',
