@@ -2701,7 +2701,7 @@ const TEMPLATE = '<div>\n' +
     '              --></a>\n' +
     '              <a\n' +
     '                class="octotree-help"\n' +
-    '                href="https://www.54dxs.cn/www/html/games/"\n' +
+    '                href="https://github.com/lijian17/54Helper/wiki"\n' +
     '                target="_blank"\n' +
     '                tabindex="-1"\n' +
     '              >\n' +
@@ -2717,7 +2717,7 @@ const TEMPLATE = '<div>\n' +
     '            <div>\n' +
     '              <label>快捷键</label>\n' +
     '              <div class="octotree-token-actions">\n' +
-    '                <a class="octotree-help" href="https://www.54dxs.cn/www/html/games/" target="_blank" tabindex="-1">\n' +
+    '                <a class="octotree-help" href="https://github.com/lijian17/54Helper/wiki" target="_blank" tabindex="-1">\n' +
     '                  <span class="tooltipped tooltipped-n" aria-label="了解更多">\n' +
     '                    <i class="octotree-icon-help"></i>\n' +
     '                  </span>\n' +
@@ -2767,7 +2767,7 @@ const TEMPLATE = '<div>\n' +
     '            <li>Safari浏览器支持</li>\n' +
     '          </ul>\n' +
     '          <div style="display: none;">\n' +
-    '            <a href="https://54dxs.cn/www/html/games/" target="_blank">\n' +
+    '            <a href="https://github.com/lijian17/54Helper/wiki" target="_blank">\n' +
     '              <i class="octotree-icon-github"></i>在我们的网站上了解更多\n' +
     '            </a>\n' +
     '          </div>\n' +
@@ -2777,8 +2777,8 @@ const TEMPLATE = '<div>\n' +
     '\n' +
     '    <div class="octotree-footer">\n' +
     '      <div class="octotree-ad-small">\n' +
-    '        <a href="https://54dxs.cn/www/html/games/" target="_blank"\n' +
-    '          >54大学生</a\n' +
+    '        <a href="https://github.com/lijian17/54Helper/wiki" target="_blank"\n' +
+    '          >54Helper</a\n' +
     '        >\n' +
     '      </div>\n' +
     '    </div>\n' +
