@@ -139,7 +139,7 @@
       "all_frames": true
     },
     {
-      "run_at": "document_start",
+      "run_at": "document_end",
       "matches": ["https://github.com/*"],
       "js": ["octotree/content.js"],
       "css": ["octotree/content.css"]
