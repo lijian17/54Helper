@@ -19,7 +19,7 @@ new Vue({
 
     created: function () {
 
-        // »ñÈ¡µ±Ç°ÈÈ¼ü
+        // è·å–å½“å‰çƒ­é”®
         chrome.commands && chrome.commands.getAll && chrome.commands.getAll(keys => {
             keys.some(key => {
                 if (key.name === '_execute_browser_action' && key.shortcut) {
@@ -41,7 +41,7 @@ new Vue({
             this.maxJsonKeysNumber = opts['MAX_JSON_KEYS_NUMBER'];
             this.auto_text_decode = opts['AUTO_TEXT_DECODE'] === 'true';
 
-            // Èç¹û»¹Ã»ÉèÖÃ¹ımenu£¬¾ÍÓÃÄ¬ÈÏµÄÁË
+            // å¦‚æœè¿˜æ²¡è®¾ç½®è¿‡menuï¼Œå°±ç”¨é»˜è®¤çš„äº†
             Settings.askMenuSavedOrNot(saved => {
                 if (!saved) {
                     this.selectedMenu = this.defaultMenu;
