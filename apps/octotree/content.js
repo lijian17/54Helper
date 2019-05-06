@@ -2653,6 +2653,11 @@ $.support.pjax ? enable() : disable()
 
 })();
 (function(){
+	// GitHub代码浏览树是否开启，标记值获取
+	Tarp.require('../options/settings').getOptions(function(opts){
+		window.GITHUB_CODE_OCTOTREE = opts['GITHUB_CODE_OCTOTREE'];
+	});
+
 const TEMPLATE = '<div>\n' +
     '  <nav class="octotree-sidebar">\n' +
     '    <div class="octotree-toggle">\n' +
@@ -4215,6 +4220,11 @@ $(document).ready(() => {
   loadExtension();
 
   async function loadExtension() {
+  	// 是否开启GitHub代码浏览树
+  	if (!window.GITHUB_CODE_OCTOTREE) {
+  		return;
+  	}
+  	
     const $html = $('html');
     const $document = $(document);
     const $dom = $(TEMPLATE);
