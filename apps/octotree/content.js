@@ -2661,8 +2661,8 @@ const TEMPLATE = '<div>\n' +
     '      <div class="popup">\n' +
     '        <div class="arrow"></div>\n' +
     '        <div class="content">\n' +
-    '          Hi there, this is Octotree. Move mouse over this button to display the code tree. You can also press the\n' +
-    '          shortkey <kbd>cmd shift s</kbd> (or <kbd>ctrl shift s</kbd>).\n' +
+    '          你好，这是54Helper。将鼠标移到该按钮上以显示代码树。你也可以按\n' +
+    '          快捷键 <kbd>cmd shift s</kbd> (or <kbd>ctrl shift s</kbd>).\n' +
     '        </div>\n' +
     '      </div>\n' +
     '    </div>\n' +
@@ -2757,7 +2757,7 @@ const TEMPLATE = '<div>\n' +
     '        </form>\n' +
     '\n' +
     '        <div class="octotree-ad-big">\n' +
-    '          <div style="display: none;">Octotree Pro的特点</div>\n' +
+    '          <div style="display: none;">54Helper Pro的特点</div>\n' +
     '          <ul style="display: none;">\n' +
     '            <li>Dark模式</li>\n' +
     '            <li>文件搜索</li>\n' +
@@ -2891,8 +2891,8 @@ class Storage {
       localStorage.setItem(key, JSON.stringify(val));
     } catch (e) {
       const msg =
-        'Octotree cannot save its settings. ' +
-        'If the local storage for this domain is full, please clean it up and try again.';
+        '54Helper无法保存其设置' +
+        '如果此域的本地存储已满，请清理并重试。';
       console.error(msg, e);
     }
     if (cb) cb();
@@ -3006,8 +3006,8 @@ class OctotreeService {
 
   getInvalidTokenMessage({responseStatus, requestHeaders}) {
     return (
-      'The GitHub access token is invalid. ' +
-      'Please go to <a class="settings-btn" href="javascript:void(0)">设置</a> and update the token.'
+      'GitHub访问token无效' +
+      '请转到 <a class="settings-btn" href="javascript:void(0)">设置</a> 并更新token'
     );
   }
 }
@@ -3185,7 +3185,7 @@ class Adapter {
         message = '此存储库为空。';
         break;
       case 401:
-        error = '无效令牌';
+        error = '无效token';
         message = octotree.getInvalidTokenMessage({
           responseStatus: jqXHR.status,
           requestHeaders: settings.headers
@@ -3194,8 +3194,8 @@ class Adapter {
       case 404:
         error = '私有存储库';
         message =
-          '访问私有存储库需要Github访问令牌。' +
-          '请转到 <a class="settings-btn" href="javascript:void(0)">设置</a> 并输入令牌';
+          '访问私有存储库需要Github访问token。' +
+          '请转到 <a class="settings-btn" href="javascript:void(0)">设置</a> 并输入token';
         break;
       case 403:
         if (jqXHR.getResponseHeader('X-RateLimit-Remaining') === '0') {
@@ -3203,13 +3203,13 @@ class Adapter {
           error = '超出API限制';
           message =
             '您已经超过了 <a href="https://developer.github.com/v3/#rate-limiting">GitHub API速率限制</a>. ' +
-            '要继续使用octotree，需要提供一个github访问令牌。' +
-	        '请转到 <a class="settings-btn" href="javascript:void(0)">设置</a> 并输入令牌';
+            '要继续使用octotree，需要提供一个github访问token。' +
+	        '请转到 <a class="settings-btn" href="javascript:void(0)">设置</a> 并输入token';
         } else {
           error = '禁止的';
           message =
-	        '访问私有存储库需要Github访问令牌。' +
-	        '请转到 <a class="settings-btn" href="javascript:void(0)">设置</a> 并输入令牌';
+	        '访问私有存储库需要Github访问token。' +
+	        '请转到 <a class="settings-btn" href="javascript:void(0)">设置</a> 并输入token';
         }
 
         break;
@@ -3870,7 +3870,7 @@ class HelpPopup {
     if (this.showInstallationWarning) {
       $view
         .find('.content')
-        .text('You currently have 2 versions of Octotree installed. Please uninstall one of the them.');
+        .text('您当前安装了2个54Helper版本。请卸载其中一个。');
     } else if (popupShown || sidebarVisible) {
       return hideAndDestroy();
     }
