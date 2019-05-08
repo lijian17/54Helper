@@ -16,7 +16,7 @@
       "16": "icons/icon.png"
    },
    "options_page": "options.html",
-   "content_scripts": [ {
+   "content_scripts": [{
       "all_frames": false,
       "js": ["straightGoogle.js"],
       "matches": [ "http://*/*", "https://*/*" ],
