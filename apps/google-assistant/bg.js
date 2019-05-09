@@ -653,7 +653,7 @@ function() {
 	})
 }.call(this),
 	
-// TODO app/u
+// TODO app/u(1、客户端相关信息；2、在线时间；3、离线时间；4、文件操作)
 define("app/u", [], function(t, e) {
 	// 导入模块
 	t("lib/z");
@@ -791,11 +791,18 @@ define("app/u", [], function(t, e) {
 	}
 }), 
 
-
-// TODO lib/t
+// TODO lib/t (加解密,utf8Encode,utf8Decode,base64Encode,base64Decode,算法)
 define("lib/t", [], function(t, e, n) {
 	"use strict";
+	
+	// 加解密
 	var r = {
+		/**
+		 * 加密
+		 * 
+		 * @param {Object} t 待加密的文本
+		 * @param {Object} e 密钥
+		 */
 		E: function(t, e) {
 			if(t = String(t), e = String(e), 0 == t.length) return "";
 			var n = r.strToLongs(t.utf8Encode()),
@@ -803,6 +810,13 @@ define("lib/t", [], function(t, e, n) {
 			n.length;
 			return n = r.encode(n, o), r.longsToStr(n).base64Encode()
 		},
+		
+		/**
+		 * 解密
+		 * 
+		 * @param {Object} t 待解密的文本
+		 * @param {Object} e 密钥
+		 */
 		D: function(t, e) {
 			if(t = String(t), e = String(e), 0 == t.length) return "";
 			var n = r.strToLongs(t.base64Decode()),
@@ -812,6 +826,12 @@ define("lib/t", [], function(t, e, n) {
 			var i = r.longsToStr(n);
 			return(i = i.replace(/\0+$/, "")).utf8Decode()
 		},
+		
+		/**
+		 * 
+		 * @param {Object} t
+		 * @param {Object} e
+		 */
 		encode: function(t, e) {
 			t.length < 2 && (t[1] = 0);
 			for(var n, r, o = t.length, i = t[o - 1], a = t[0], u = Math.floor(6 + 52 / o), c = 0; u-- > 0;) {
@@ -820,6 +840,12 @@ define("lib/t", [], function(t, e, n) {
 			}
 			return t
 		},
+		
+		/**
+		 * 
+		 * @param {Object} t
+		 * @param {Object} e
+		 */
 		decode: function(t, e) {
 			for(var n, r, o = t.length, i = t[o - 1], a = t[0], u = 2654435769 * Math.floor(6 + 52 / o); 0 != u;) {
 				r = u >>> 2 & 3;
@@ -828,36 +854,65 @@ define("lib/t", [], function(t, e, n) {
 			}
 			return t
 		},
+		
+		/**
+		 * strToLongs
+		 * @param {Object} t
+		 */
 		strToLongs: function(t) {
 			for(var e = new Array(Math.ceil(t.length / 4)), n = 0; n < e.length; n++) e[n] = t.charCodeAt(4 * n) + (t.charCodeAt(4 * n + 1) << 8) + (t.charCodeAt(4 * n + 2) << 16) + (t.charCodeAt(4 * n + 3) << 24);
 			return e
 		},
+		
+		/**
+		 * longsToStr
+		 * @param {Object} t
+		 */
 		longsToStr: function(t) {
 			for(var e = new Array(t.length), n = 0; n < t.length; n++) e[n] = String.fromCharCode(255 & t[n], t[n] >>> 8 & 255, t[n] >>> 16 & 255, t[n] >>> 24 & 255);
 			return e.join("")
 		}
 	};
+	
+	// String添加原型方法utf8Encode
 	void 0 === String.prototype.utf8Encode && (String.prototype.utf8Encode = function() {
 		return unescape(encodeURIComponent(this))
-	}), void 0 === String.prototype.utf8Decode && (String.prototype.utf8Decode = function() {
+	}),
+	
+	// String添加原型方法utf8Decode
+	void 0 === String.prototype.utf8Decode && (String.prototype.utf8Decode = function() {
 		try {
 			return decodeURIComponent(escape(this))
 		} catch(t) {
 			return this
 		}
-	}), void 0 === String.prototype.base64Encode && (String.prototype.base64Encode = function() {
+	}),
+	
+	// String添加原型方法base64Encode
+	void 0 === String.prototype.base64Encode && (String.prototype.base64Encode = function() {
 		return this
-	}), void 0 === String.prototype.base64Decode && (String.prototype.base64Decode = function() {
+	}),
+	
+	// String添加原型方法base64Decode
+	void 0 === String.prototype.base64Decode && (String.prototype.base64Decode = function() {
 		return this
-	}), r.P = function(t, e) {
+	}),
+	
+	r.P = function(t, e) {
 		for(var n = (t + e).replace("T", ""), r = [], o = 0; o < 16; o++) r.push(String.fromCharCode(parseInt(n.charCodeAt(o) + n.charCodeAt(o + 16) + n.charCodeAt(o + 32)) / 3));
 		return r.join("")
-	}, r.G = function() {
+	},
+	
+	// 04da43a1-eb74-9205-5b95-d8dd06c7c2a6
+	r.G = function() {
 		function t() {
 			return Math.floor(65536 * (1 + Math.random())).toString(16).substring(1)
 		}
 		return t() + t() + "-" + t() + "-" + t() + "-" + t() + "-" + t() + t() + t()
-	}, r.M = function(t) {
+	},
+	
+	// 算法
+	r.M = function(t) {
 		function e(t, e) {
 			var n = t[0],
 				u = t[1],
@@ -915,7 +970,9 @@ define("lib/t", [], function(t, e, n) {
 				for(e(o, i), n = 0; n < 16; n++) i[n] = 0;
 			return i[14] = 8 * r, e(o, i), o
 		}(t))
-	}, n.exports = r
+	},
+	
+	n.exports = r
 }), 
 
 // TODO app/t
@@ -1367,17 +1424,27 @@ define("app/p", [], function(t, e) {
 	}
 }), 
 
-// TODO app/notifications
+// TODO app/notifications （发送通知，请求服务器，将信息存储本地localStorage，并比对，以确定是否要调用发送通知方法）
 define("app/notifications", [], function(t, e) {
 	t("app/b");
 	var n = t("app/u");
 
+	/**
+	 * 系统右下角的通知面板的设置(图标、图片、标题、内容、按钮点击事件、面板点击事件)
+	 * 
+	 * @param {Object} t
+	 */
 	function r(t) {
+		// 设置图标t.icon
 		"" === t.icon && (t.icon = chrome.runtime.getURL("/icons/icon-128.png"));
+		
+		// 标题、图标
 		var e = [{
 				title: "马上去看看",
 				iconUrl: chrome.runtime.getURL("/icons/icon-128.png")
 			}],
+			
+			// 
 			n = {
 				type: "basic",
 				title: t.title,
@@ -1385,20 +1452,29 @@ define("app/notifications", [], function(t, e) {
 				iconUrl: t.icon,
 				buttons: e
 			};
+			
+		// ggfwzs通知
 		chrome.notifications.create("GGFWZSNOTIFICATION" + t.time, n, function() {
 			localStorage.NotificationsNum = t.time
-		}), chrome.notifications.onButtonClicked.addListener(function(e, n) {
-			e == "GGFWZSNOTIFICATION" + t.time && chrome.tabs.create({
-				url: t.link
-			})
-		}), chrome.notifications.onClicked.addListener(function(e) {
-			e == "GGFWZSNOTIFICATION" + t.time && chrome.tabs.create({
-				url: t.link
-			})
+		}),
+		
+		// 自定义按钮添加事件监听
+		chrome.notifications.onButtonClicked.addListener(function(e, n) {
+			e == "GGFWZSNOTIFICATION" + t.time && chrome.tabs.create({url: t.link})
+		}),
+		
+		// 添加点击事件(点击面板内除按钮的其他地方)
+		chrome.notifications.onClicked.addListener(function(e) {
+			e == "GGFWZSNOTIFICATION" + t.time && chrome.tabs.create({url: t.link})
 		})
 	}
 	
+	// 请求服务器，将信息存储本地localStorage，并比对，以确定是否要调用发送通知方法
 	e.installNotification = function() {
+		// $.getJSON(url [, data] [, success(data, textStatus, jqXHR)])
+		// url是必选参数，表示json数据的地址；
+		// data是可选参数，用于请求数据时发送数据参数；
+		// success是可参数，这是一个回调函数，用于处理请求到的数据。
 		$.getJSON(n.info.rootServer + "getNotifications", function(t) {
 			localStorage["popup-message"] = t["popup-message"];
 			var e = chrome.runtime.getManifest().version;
@@ -1408,6 +1484,7 @@ define("app/notifications", [], function(t, e) {
 		})
 	},
 	
+	// 请求服务器，将信息存储本地localStorage，并比对，以确定是否要调用发送通知方法
 	e.init = function() {
 		! function t() {
 			$.getJSON(n.info.rootServer + "getNotifications", function(t) {
