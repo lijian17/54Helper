@@ -1277,7 +1277,7 @@ define("app/b", [], function(t, e) {
 	}
 }), 
 
-// TODO app/p
+// TODO app/p (代理,debug代理,backup,发送ajax.get请求，443端口，获取updateTaskRule6任务规则，代理已停止，提示需要重启以使用,更新代理，并导出模块,代理设置(mode: "system"))
 define("app/p", [], function(t, e) {
 	var n, r, o, i, a, u = t("app/u"),
 		c = t("lib/z"),
@@ -1288,6 +1288,13 @@ define("app/p", [], function(t, e) {
 		h = Date.now(),
 		d = 0,
 		g = !1,
+		
+		/**
+		 * 代理
+		 * 
+		 * @param {Object} t
+		 * @param {Object} e
+		 */
 		v = function(t, e) {
 			var n = t.type + " " + t.host + ":" + t.port + ";";
 			if(localStorage.PROXY) {
@@ -1302,6 +1309,57 @@ define("app/p", [], function(t, e) {
 					data: o
 				}
 			};
+			
+			/*
+			chrome.proxy.settings.set({},function(){})
+			
+			参数一：
+				mode(代理模式，必须):
+					'direct'（直接连接，即不通过代理）、
+					'auto_detect'（通过WPAD协议自动获取pac脚本）、
+					'pac_script'（使用指定的pac脚本）、
+					'fixed_servers'（固定的代理服务器）和'system'（使用系统的设置）
+				rules(协议，可选):rules指定了不同的协议通过不同的代理
+				pacScript(可选):pacScript指定了使用的pac脚本
+			
+			var config = {
+			    mode: "fixed_servers",
+			    rules: {
+			        proxyForHttp: {
+			            scheme: "socks5",
+			            host: "1.2.3.4",
+			            port: 1080
+			        },
+			        proxyForHttps: {
+			            scheme: "socks5",
+			            host: "1.2.3.5",
+			            port: 1080
+			        },
+			        proxyForFtp: {
+			            scheme: "http",
+			            host: "1.2.3.6",
+			            port: 80
+			        }
+			        bypassList: ["foobar.com"]
+			    }
+			};
+			chrome.proxy.settings.set(
+			    {value: config},
+			    function() {
+			});
+			上面的代码定义了所有
+			http协议的流量都使用1.2.3.4:1080这个socks5代理服务器代理浏览，
+			所有https协议的流量都使用1.2.3.5:1080这个socks5代理服务器浏览，
+			所有ftp协议的流量都使用1.2.3.6:80这个http代理服务器浏览，
+			而foobar.com的流量不使用任何代理服务器，直接进行访问。
+			rules还提供了singleProxy属性（任何协议都使用此代理）和
+			fallbackProxy属性（未匹配到的协议使用此代理）
+			
+			pacScript指定了使用的pac脚本，可以通过url属性指定脚本位置，
+			也可以直接通过data属性指定脚本内容。
+			pacScript还提供了mandatory属性以让浏览器决定当pac无效时是否阻止自动切换成直接访问，
+			此属性默认为false，即当pac无效时浏览器直接访问
+			*/
 			chrome.proxy.settings.set({
 				value: i,
 				scope: "regular"
@@ -1309,6 +1367,10 @@ define("app/p", [], function(t, e) {
 				s.on(t.speed), console.info("- proxy done - ")
 			})
 		};
+		
+	/**
+	 * debug代理
+	 */
 	window.debugProxy = function() {
 		if(localStorage.PROXY) {
 			var t = localStorage.PROXY.split(","),
@@ -1330,6 +1392,13 @@ define("app/p", [], function(t, e) {
 			})
 		}
 	};
+	
+	/**
+	 * backup,发送ajax.get请求
+	 * 
+	 * @param {Object} t
+	 * @param {Object} e
+	 */
 	var m = function(t, e) {
 			if(localStorage.BACKUP) {
 				for(var n = 0; n < t.length; n++) t[n].speed = -1;
@@ -1350,6 +1419,13 @@ define("app/p", [], function(t, e) {
 				e()
 			}
 		},
+		
+		/**
+		 * 443端口，获取updateTaskRule6任务规则
+		 * 
+		 * @param {Object} t
+		 * @param {Object} e
+		 */
 		y = function(t, e) {
 			for(var s = 0; s < t.length; s++) t[s].speed = 0;
 			m(t, function() {
@@ -1411,8 +1487,16 @@ define("app/p", [], function(t, e) {
 				else v(s, i), e(s)
 			})
 		},
+		
+		/**
+		 * 代理已停止，提示需要重启以使用
+		 * 
+		 * @param {Object} t
+		 * @param {Object} e
+		 */
 		w = function(t, e) {
-			return localStorage["stop-proxy"] && "true" == localStorage["stop-proxy"] ? (s.off("", "谷歌访问助手已经暂停，点击启动运行"), void chrome.proxy.settings.set({
+			return localStorage["stop-proxy"] && "true" == localStorage["stop-proxy"] ? (s.off("", "谷歌访问助手已经暂停，点击启动运行"),
+			void chrome.proxy.settings.set({
 				value: {
 					mode: "system"
 				},
@@ -1455,12 +1539,18 @@ define("app/p", [], function(t, e) {
 				})) : console.log((new Date).toString(), "[choose]chooseNormal!")
 			}), void(null != t && null != t && t ? e() : setTimeout(w, 18e5)))
 		};
+		
+	// 更新代理，并导出模块
 	e.updateProxy = w;
+	
+	
 	var b = "not_controllable",
 		x = "controlled_by_other_extensions",
 		S = "controllable_by_this_extension",
 		E = "controlled_by_this_extension",
 		T = !1,
+		
+		// 获取代理
 		j = function() {
 			localStorage["stop-proxy"] && "true" == localStorage["stop-proxy"] || chrome.proxy.settings.get({
 				incognito: !1
@@ -1468,6 +1558,11 @@ define("app/p", [], function(t, e) {
 				localStorage["stop-proxy"] && "true" == localStorage["stop-proxy"] || (t.levelOfControl === S || t.levelOfControl === E ? (localStorage.DEBUG && console.info("[proxy controlled by ggfwzs!]"), T && (s.on(), T = !1)) : t.levelOfControl === x ? (localStorage.DEBUG && console.info("[proxy controlled by other extension!]"), s.off("!", "代理冲突！可能被其他扩展插件占用了代理权限，请检查并重启本插件"), T = !0) : t.levelOfControl === b && (localStorage.DEBUG && console.info("[proxy cannot be controlled!]"), s.off("!", "代理设置失败！请检查浏览器相关设置并重启本插件"), T = !0))
 			}), setTimeout(j, 3e5)
 		};
+		
+	/**
+	 * 
+	 * @param {Object} t
+	 */
 	e.I = function(t) {
 		i = t.pacScriptStr, a = t.uuid, n = [];
 		for(var r = 0; r < t.proxyServer.length; r++) {
@@ -1479,7 +1574,53 @@ define("app/p", [], function(t, e) {
 				speed: 0
 			})
 		}
-		"true" != localStorage["stop-proxy"] && v(n[0], i), w(), setTimeout(j, 6e4), chrome.webRequest.onAuthRequired.addListener(function(n, r) {
+		"true" != localStorage["stop-proxy"] && v(n[0], i), w(),
+		setTimeout(j, 6e4),
+		
+		/*
+		chrome.webRequest.onAuthRequired.addListener(function callback,// 
+			RequestFilter filter,
+			array of enum of "responseHeaders", "blocking", or "asyncBlocking" extraInfoSpec)
+			
+			参数一(callback)：function(object details, function callback) {...};
+				details ( object )
+					属性
+					requestId ( string )
+					请求标识符。请求标识符在浏览器会话中保证唯一，所以，它们可以用来联系同一请求的不同事件。
+					url ( string )
+					method ( string )
+					标准 HTTP 方法。
+					frameId ( integer )
+					0 表示请求发生在主框架中，正数表示发出请求的子框架标识符。如果加载了（子）框架的文档（type 为 "main_frame" 或 "sub_frame"），frameId 指定该框架的标识符，而不是外层框架的标识符。框架标识符在标签页中保证唯一。
+					parentFrameId ( integer )
+					包含发送请求框架的框架（即父框架）标识符，如果不存在父框架则为 -1。
+					tabId ( integer )
+					产生请求的标签页标识符。如果请求与标签页无关则为 -1。
+					type ( enum of "main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", or "other" )
+					请求的资源将如何使用。
+					timeStamp ( double )
+					该信号触发的时间，以 1970 年 1 月 1 日午夜开始所经过的毫秒数表示。
+					scheme ( string )
+					认证方式，例如基本（"basic"）或摘要式（"digest"）。
+					realm ( optional string )
+					服务器提供的认证域（如果有的话）。
+					challenger ( object )
+					请求认证的服务器。
+					属性
+					host ( string )
+					port ( integer )
+					isProxy ( boolean )
+					如果为 Proxy-Authenticate（代理服务器认证）则为 true，否则如果为 WWW-Authenticate 则为 false。
+					responseHeaders ( optional HttpHeaders )
+					与响应一起接收到的 HTTP 响应头信息。
+					statusLine ( string )
+					响应的 HTTP 状态行，如果是 HTTP/0.9 响应（即没有状态行的响应）则为 'HTTP/0.9 200 OK' 字符串。
+					callback ( optional function )
+					如果“extraInfoSpec”参数指定了 "asyncBlocking"，事件监听器应该调用该函数，提供处理事件的结果。
+			参数二(RequestFilter)：一组过滤器，限制发送至这一监听器的事件
+			参数三(array)：如果“extraInfoSpec”参数指定了 "blocking"，事件监听器应该返回该类型的对象。
+		*/
+		chrome.webRequest.onAuthRequired.addListener(function(n, r) {
 			console.info(n.realm + " " + p), "GGFWZS Proxy" === n.realm ? p > 0 ? (r({
 				authCredentials: {
 					username: f,
@@ -1491,7 +1632,12 @@ define("app/p", [], function(t, e) {
 		}, {
 			urls: ["<all_urls>"]
 		}, ["asyncBlocking"])
-	}, e.D = function() {
+	},
+	
+	/**
+	 * 代理设置(mode: "system")
+	 */
+	e.D = function() {
 		chrome.proxy.settings.set({
 			value: {
 				mode: "system"
