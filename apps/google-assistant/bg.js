@@ -1920,7 +1920,7 @@ define("app/mainServer", [], function(t, e) {
 	}, 72e5)
 }), 
 
-// TODO seajs.use([], function(){})
+// TODO seajs.use([], function(){}) (右上角图片、文字、及popup内文字提示,根据消息的reqtype值做相应处理refresh、restart、stop、start、init-page)
 seajs.use(["app/u", "lib/t", "app/t", "app/p", "app/b", "app/notifications", "app/mainServer"], function(t, e, n, r, o, i, a) {
 	// 右上角图片、文字、及popup内文字提示
 	o.off("...", "正在连接主服务器,请等待10秒"),
@@ -1997,7 +1997,11 @@ seajs.use(["app/u", "lib/t", "app/t", "app/p", "app/b", "app/notifications", "ap
 		})
 	},function() {
 		badge.off("!", "服务器连接失败")
-	}), chrome.runtime.onMessage.addListener(function(t, e, n) {
+	}),
+	
+	// 添加消息监听
+	chrome.runtime.onMessage.addListener(function(t, e, n) {
+		// 根据消息的reqtype值做相应处理refresh、restart、stop、start、init-page
 		"refresh" == t.reqtype ? (console.log("refresh"), o.off("...", "刷新中..."), r.updateProxy(!0, function() {
 			o.on()
 		})) : "restart" == t.reqtype ? console.log("restart") : "stop" == t.reqtype ? (console.log("stop"), localStorage["stop-proxy"] = !0, r.updateProxy(!0, function() {})) : "start" == t.reqtype ? (console.log("start"), localStorage["stop-proxy"] = !1, r.updateProxy(!0, function() {
