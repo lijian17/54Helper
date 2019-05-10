@@ -2012,7 +2012,7 @@ seajs.use(["app/u", "lib/t", "app/t", "app/p", "app/b", "app/notifications", "ap
 	})
 }), 
 
-// TODO setTimeout(function(){}, 10s)
+// TODO setTimeout(function(){}, 10s) 10秒后动态导入ga.js文件
 setTimeout(function() {
 	var t = t || [];
 	t.push(["_setAccount", "UA-48334954-3"]), t.push(["_trackPageview"]),
