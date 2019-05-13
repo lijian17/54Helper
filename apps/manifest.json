@@ -24,7 +24,9 @@
       "static/vendor/require/require.js",
       "page-encoding/index.js",
       "background/index.js",
-      "octotree/background.js"
+      "octotree/background.js",
+      "google-assistant/lib/sea.js",
+      "google-assistant/bg.js"
     ]
   },
   "options_page": "options/index.html",
@@ -37,12 +39,18 @@
     "activeTab",
     "<all_urls>",
     "https://api.github.com/*",
-    "storage"
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "proxy",
+    "webNavigation",
+    "unlimitedStorage",
+    "http://*/*",
+    "https://*/*",
+    "ftp://*/*"
   ],
   "optional_permissions": [
-    "downloads",
-    "webRequest",
-    "webRequestBlocking"
+    "downloads"
   ],
   "commands": {
     "_execute_browser_action": {
@@ -93,7 +101,8 @@
     "ruler/index.css",
     "*.woff2",
     "*.png",
-    "*.gif"
+    "*.gif",
+    "google-assistant/first.html"
   ],
   "content_scripts": [
     {
@@ -106,7 +115,8 @@
         "static/vendor/jquery/jquery-3.3.1.min.js",
         "static/vendor/require/require.js",
         "static/js/msg_type.js",
-        "content-script/index.js"
+        "content-script/index.js",
+        "google-assistant/straightGoogle.js"
       ],
       "run_at": "document_end",
       "all_frames": false
@@ -145,7 +155,7 @@
       "css": ["octotree/content.css"]
     }
   ],
-  "content_security_policy": "style-src 'self' 'unsafe-inline';script-src 'self' 'unsafe-eval'; object-src 'self' ; media-src 'self' filesystem:",
+  "content_security_policy": "style-src 'self' 'unsafe-inline';script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self' ; media-src 'self' filesystem:",
   "update_url": "https://clients2.google.com/service/update2/crx",
   "homepage_url": "https://github.com/lijian17/54Helper/wiki"
 }
