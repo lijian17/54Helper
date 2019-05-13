@@ -1243,7 +1243,7 @@ define("app/b", [], function(t, e) {
 		r || (r = "谷歌访问助手"),
 		// 设置离线图标
 		chrome.browserAction.setIcon({
-			path: "/icons/inactive.png"
+			path: "/google-assistant/icons/inactive.png"
 		}),
 		chrome.browserAction.setBadgeText({
 			text: t
@@ -1262,7 +1262,7 @@ define("app/b", [], function(t, e) {
 	e.on = function(t) {
 		// 设置在线图标
 		chrome.browserAction.setIcon({
-			path: "/icons/icon.png"
+			path: "/google-assistant/icons/icon.png"
 		}),
 		chrome.browserAction.setBadgeText({
 			text: ""
@@ -1661,12 +1661,12 @@ define("app/notifications", [], function(t, e) {
 	 */
 	function r(t) {
 		// 设置图标t.icon
-		"" === t.icon && (t.icon = chrome.runtime.getURL("/icons/icon-128.png"));
+		"" === t.icon && (t.icon = chrome.runtime.getURL("/google-assistant/icons/icon-128.png"));
 		
 		// 标题、图标
 		var e = [{
 				title: "马上去看看",
-				iconUrl: chrome.runtime.getURL("/icons/icon-128.png")
+				iconUrl: chrome.runtime.getURL("/google-assistant/icons/icon-128.png")
 			}],
 			
 			// 
