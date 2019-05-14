@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>谷歌访问助手</title>
+		<link rel="stylesheet" href="index.css" />
+		<script type="text/javascript" src="../static/vendor/vue/vue.js"></script>
+		<script type="text/javascript" src="../static/vendor/require/require.js"></script>
+	</head>
+
+	<body>
+		<div class="wrapper" id="pageContainer">
+			<div class="panel panel-default" style="margin-bottom: 0px;">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+                    <a href="https://github.com/lijian17/54Helper/wiki" target="_blank" class="x-a-high">
+                        <img src="../static/img/icon16.png" alt="54helper" style="margin-top: -3px;"/> 54Helper</a>：谷歌访问助手</h3>
+				</div>
+			</div>
+			
+			<div class="panel panel-default panel-body" style="margin-top: 10px;">
+				<div class="row">
+					<div class="col-lg-6">
+						<div id="developer">
+		                    <div class="name">
+		                        <span>免费访问：<a target="_blank" href="https://www.google.com.hk">谷歌搜索</a>，<a target="_blank" href="https://mail.google.com/mail/">Gmail邮箱</a>，<a target="_blank" href="https://chrome.google.com/webstore/category/extensions?hl=zh-CN">Chrome商店</a>...</span>
+		                    </div>
+		                </div>
+		                <div style="margin-bottom: 15px;">
+		                    <span>应急操作：<a id="refreshP" href="#">刷新</a>&nbsp;&nbsp;&nbsp;<a id="restartP" href="#">重启</a>&nbsp;&nbsp;&nbsp;<a id="stopP" href="#">暂停</a>&nbsp;&nbsp;&nbsp;<a id="startP" href="#">启动</a></span>
+		                </div>
+		                <div id="onStatus" style="display: none">
+		                </div>
+		                <div>
+		                    <span>如果还不能访问，可以试试刷新或者重启</span><br>
+		                    <span>如果要使用其他代理而不冲突，可以点击暂停</span>
+		                </div>
+		                <div id="offStatus" style="display: none">
+		                    <span id="tips"></span>
+		                </div>
+		
+		                <span>
+		                    <e href="" id="openMainWebsite" data-i18n-content="popup_switchyWebPage">交流QQ群：216966558</e>
+		                </span>
+					</div>
+					
+					<div class="col-lg-6 share">
+			            <a id="share-facebook" href="https://www.google.com" target="_blank">Google搜索</a>
+			            <a id="share-chrome" href="https://chrome.google.com/webstore/category/apps?authuser=1" target="_blank">Chrome商店</a>
+			            <a id="share-gmail" href="https://mail.google.com" target="_blank">Gmail邮箱</a>
+			            <a id="share-gplus" href="https://plus.google.com/u/0/getstarted?fww=1" target="_blank">Google+</a>
+						<span>可访问网站，点击体验</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="index.js"></script>
+	</body>
+
+</html>
