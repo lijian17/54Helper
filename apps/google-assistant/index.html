@@ -28,20 +28,24 @@
 		                    </div>
 		                </div>
 		                <div style="margin-bottom: 15px;">
-		                    <span>应急操作：<a id="refreshP" href="#">刷新</a>&nbsp;&nbsp;&nbsp;<a id="restartP" href="#">重启</a>&nbsp;&nbsp;&nbsp;<a id="stopP" href="#">暂停</a>&nbsp;&nbsp;&nbsp;<a id="startP" href="#">启动</a></span>
+		                    <span>应急操作：
+		                    	<a @click="refreshF()" href="#">刷新</a>&nbsp;&nbsp;&nbsp;
+		                    	<a @click="restartF()" href="#">重启</a>&nbsp;&nbsp;&nbsp;
+		                    	<a @click="stopF()" v-if="stopP" href="#">暂停</a>
+		                    	<a @click="startF()" v-if="startP" href="#">启动</a>
+		                    </span>
 		                </div>
-		                <div id="onStatus" style="display: none">
-		                </div>
+		                <div v-if="onStatus"></div>
 		                <div>
 		                    <span>如果还不能访问，可以试试刷新或者重启</span><br>
 		                    <span>如果要使用其他代理而不冲突，可以点击暂停</span>
 		                </div>
-		                <div id="offStatus" style="display: none">
-		                    <span id="tips"></span>
+		                <div v-if="offStatus">
+		                    <span class="tips" v-html="tips"></span>
 		                </div>
 		
 		                <span>
-		                    <e href="" id="openMainWebsite" data-i18n-content="popup_switchyWebPage">交流QQ群：216966558</e>
+		                    <e>{{popupMessage}}</e>
 		                </span>
 					</div>
 					
