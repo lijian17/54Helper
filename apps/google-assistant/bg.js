@@ -1250,10 +1250,6 @@ define("app/t", [], function(t, e) {
 
 // TODO app/b(Chrome扩展右上角的图标等的控制模块)
 define("app/b", [], function(t, e) {
-	// 是否开启谷歌访问助手
-	if (!window.GOOGLE_ASSISTANT) {
-		return;
-	}
 	// 定义popupView对象
 	window.popupView = {
 		status: "off",
