@@ -1230,7 +1230,7 @@ define("app/b", [], function(t, e) {
 		speed: -1,
 		startTime: Date.now(),
 		warming: "",
-		tips: "交流QQ群：176080917"
+		tips: "交流QQ群：216966558"
 	},
 	
 	// 对外提供模块off
