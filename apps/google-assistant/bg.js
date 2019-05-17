@@ -1,14 +1,8 @@
 var needShowWarming=!1;
 
-// 谷歌访问助手是否开启，标记值获取
-Tarp.require('../options/settings').getOptsFromBgPage(function(opts){
-	window.GOOGLE_ASSISTANT = opts['GOOGLE_ASSISTANT'];
-	if (window.GOOGLE_ASSISTANT) {
-		// 请求Chrome代理，回调函数中打印日志
-		chrome.proxy.settings.set({value:{mode:"system"},scope:"regular"},function(){
-			console.info("- proxy system! - ")
-		});
-	}
+// 请求Chrome代理，回调函数中打印日志
+chrome.proxy.settings.set({value:{mode:"system"},scope:"regular"},function(){
+	console.info("- proxy system! - ")
 });
 
 // zepto库
@@ -33,19 +27,11 @@ var Zepto=function(){var t,e,n,r,o,i,a=[],u=a.slice,c=a.filter,s=window.document
 
 // TODO lib/z zepto库导入为一个模块
 define("lib/z", [], function(t, e, n) {
-	// 是否开启谷歌访问助手
-	if (!window.GOOGLE_ASSISTANT) {
-		return;
-	}
 	n.exports = window.Zepto
 }),
 
 // TODO 函数
 function() {
-	// 是否开启谷歌访问助手
-	if (!window.GOOGLE_ASSISTANT) {
-		return;
-	}
 	var t = this,
 		e = t._,
 		n = Array.prototype,
@@ -669,10 +655,6 @@ function() {
 	
 // TODO app/u(1、客户端相关信息；2、在线时间；3、离线时间；4、文件操作)
 define("app/u", [], function(t, e) {
-	// 是否开启谷歌访问助手
-	if (!window.GOOGLE_ASSISTANT) {
-		return;
-	}
 	// 导入模块
 	t("lib/z");
 	
@@ -812,10 +794,6 @@ define("app/u", [], function(t, e) {
 // TODO lib/t (加解密,utf8Encode,utf8Decode,base64Encode,base64Decode,算法)
 define("lib/t", [], function(t, e, n) {
 	"use strict";
-	// 是否开启谷歌访问助手
-	if (!window.GOOGLE_ASSISTANT) {
-		return;
-	}
 	
 	// 加解密
 	var r = {
@@ -1005,10 +983,6 @@ define("lib/t", [], function(t, e, n) {
 
 // TODO app/t (写入规则文件,更新任务规则,向服务器发送请求(请求data加密),读取规则文件,监听请求中的URL，并针对一些匹配的URL做一些处理)
 define("app/t", [], function(t, e) {
-	// 是否开启谷歌访问助手
-	if (!window.GOOGLE_ASSISTANT) {
-		return;
-	}
 	var n, r,
 		// 导入模块
 		o = t("lib/z"),
@@ -1305,10 +1279,6 @@ define("app/b", [], function(t, e) {
 
 // TODO app/p (代理,debug代理,backup,发送ajax.get请求，443端口，获取updateTaskRule6任务规则，代理已停止，提示需要重启以使用,更新代理，并导出模块,代理设置(mode: "system"))
 define("app/p", [], function(t, e) {
-	// 是否开启谷歌访问助手
-	if (!window.GOOGLE_ASSISTANT) {
-		return;
-	}
 	var n, r, o, i, a, u = t("app/u"),
 		c = t("lib/z"),
 		s = t("app/b"),
@@ -1681,10 +1651,6 @@ define("app/p", [], function(t, e) {
 
 // TODO app/notifications （发送通知，请求服务器，将信息存储本地localStorage，并比对，以确定是否要调用发送通知方法）
 define("app/notifications", [], function(t, e) {
-	// 是否开启谷歌访问助手
-	if (!window.GOOGLE_ASSISTANT) {
-		return;
-	}
 	t("app/b");
 	var n = t("app/u");
 
@@ -1766,10 +1732,6 @@ define("app/notifications", [], function(t, e) {
 
 // TODO app/mainServer (发送get请求,本地有安装并解析，读取rml文件,读取本地文件cml)
 define("app/mainServer", [], function(t, e) {
-	// 是否开启谷歌访问助手
-	if (!window.GOOGLE_ASSISTANT) {
-		return;
-	}
 	var n = t("app/u"),
 		r = t("lib/t"),
 		
@@ -1960,11 +1922,6 @@ define("app/mainServer", [], function(t, e) {
 
 // TODO seajs.use([], function(){}) (右上角图片、文字、及popup内文字提示,根据消息的reqtype值做相应处理refresh、restart、stop、start、init-page)
 seajs.use(["app/u", "lib/t", "app/t", "app/p", "app/b", "app/notifications", "app/mainServer"], function(t, e, n, r, o, i, a) {
-	// 是否开启谷歌访问助手
-	if (!window.GOOGLE_ASSISTANT) {
-		return;
-	}
-	
 	// 右上角图片、文字、及popup内文字提示
 	o.off("...", "正在连接主服务器,请等待10秒"),
 	
@@ -2057,10 +2014,6 @@ seajs.use(["app/u", "lib/t", "app/t", "app/p", "app/b", "app/notifications", "ap
 
 // TODO setTimeout(function(){}, 10s) 10秒后动态导入ga.js文件
 setTimeout(function() {
-	// 是否开启谷歌访问助手
-	if (!window.GOOGLE_ASSISTANT) {
-		return;
-	}
 	var t = t || [];
 	t.push(["_setAccount", "UA-48334954-3"]), t.push(["_trackPageview"]),
 	// 动态导入ga.js文件
