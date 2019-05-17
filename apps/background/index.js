@@ -217,7 +217,7 @@ var BgPageInstance = (function () {
 
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             let tab = tabs[0];
-            if (!tab.id) {
+            if (!tab || !tab.id) {
             	return;
             }
             callback && callback(c54Helper.ajaxDebuggerMgr[tab.id]);
