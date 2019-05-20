@@ -1,0 +1,50 @@
+@import url("../static/css/bootstrap.min.css");
+
+.tips {
+	color: red;
+	font-size: 16px;
+	display: block;
+	padding-bottom: 5px;
+}
+
+/*右侧*/
+.share {
+	border-left: 1px dashed #37506d;
+}
+
+.share a {
+	float: left;
+	display: block;
+	width: 100px;
+	height: auto;
+	padding-top: 50px;
+	text-align: center;
+	background-position-x: center;
+	background-repeat: no-repeat;
+}
+
+#share-facebook {
+	background-image: url(img/google.png);
+}
+
+#share-chrome {
+	background-image: url(img/chrome.png);
+}
+
+#share-gmail {
+	background-image: url(img/gmail.png);
+}
+
+#share-gplus {
+	background-image: url(img/googleplus.png);
+}
+
+.share span {
+	display: block;
+	clear: both;
+	font-size: 20px;
+	color: #666666;
+	line-height: 34px;
+	margin-left: 20px;
+	padding-top: 10px;
+}

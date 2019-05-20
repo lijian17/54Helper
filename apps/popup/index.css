@@ -90,6 +90,10 @@ ul.fe-function-list li.-x-regexp b {
     background-position: -144px 1px;
 }
 
+ul.fe-function-list li.-x-googleassistant b {
+    background-position: -113px -127px;
+}
+
 ul.fe-function-list li.-x-endecode b {
     background-position: -113px -80px;
 }
