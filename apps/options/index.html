@@ -185,6 +185,9 @@
 
                         <input type="checkbox" value="REMOVE_BG" id="REMOVE_BG" v-model="selectedOpts"/>
                         <label for="REMOVE_BG">人像背景移除（精准高效的人像抠图）</label> <br/>
+
+			            <input type="checkbox" value="GOOGLE_ASSISTANT" id="GOOGLE_ASSISTANT" v-model="selectedOpts"/>
+			            <label for="GOOGLE_ASSISTANT">谷歌访问助手（Google搜索、Chrome商店、Gmail邮箱、Google+）</label> <br/>
                     </fieldset>
                 </div>
 
@@ -193,6 +196,8 @@
                     <div class="fe-whole-page">
                         <div class="fe-function-title">54Helper<span>(V{{manifest.version}})</span></div>
                         <ul class="fe-function-list">
+                            <li class="-x-googleassistant" v-if="selectedOpts.includes('GOOGLE_ASSISTANT')">
+                                <b></b>谷歌访问助手</li>
                             <li class="-x-endecode" v-if="selectedOpts.includes('EN_DECODE')">
                                 <b></b>字符串编解码</li>
                             <li class="-x-jsonformat" v-if="selectedOpts.includes('JSON_FORMAT')">

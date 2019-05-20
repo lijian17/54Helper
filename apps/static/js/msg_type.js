@@ -116,7 +116,10 @@ const MSG_TYPE = {
 
     // 人像背景移除
     REMOVE_PERSON_IMG_BG:'remove-person-img-bg',
-    REMOVE_BG:'remove-bg'
+    REMOVE_BG:'remove-bg',
+    
+    // 谷歌访问助手
+    GOOGLE_ASSISTANT: 'google-assistant'
 };
 
 (typeof module === 'object') ? module.exports = MSG_TYPE : '';

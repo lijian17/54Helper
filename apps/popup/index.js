@@ -28,7 +28,7 @@ new Vue({
 
     mounted: function () {
 
-        // 整个popup窗口支持上线选择
+        // 整个popup窗口支持上下按键选择
         document.body.addEventListener('keydown', e => {
             let keyCode = e.keyCode || e.which;
             if(![38,40,13].includes(keyCode)) {
@@ -88,6 +88,6 @@ new Vue({
             window.close();
         },
 
-        openOptionsPage: () => chrome.runtime.openOptionsPage()
+        openOptionsPage: () => chrome.runtime.openOptionsPage(),
     }
 });

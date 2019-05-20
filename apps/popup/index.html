@@ -11,6 +11,8 @@
         <div id="pageContainer">
             <div class="fe-function-title">54Helper<span>(V{{manifest.version}})</span></div>
             <ul class="fe-function-list">
+                <li class="-x-googleassistant" @click="runHelper('GOOGLE_ASSISTANT',1)" v-if="canMeShow.GOOGLE_ASSISTANT">
+                    <b></b>谷歌访问助手</li>
                 <li class="-x-endecode" @click="runHelper('EN_DECODE',1)" v-if="canMeShow.EN_DECODE">
                     <b></b>字符串编解码</li>
                 <li class="-x-jsonformat" @click="runHelper('JSON_FORMAT',1)" v-if="canMeShow.JSON_FORMAT">
