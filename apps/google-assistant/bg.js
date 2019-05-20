@@ -1237,13 +1237,15 @@ define("app/b", [], function(t, e) {
 	e.off = function(t, e, n, r) {
 		// 错误提示语
 		window.popupView.warming = e,
+		// 设置角标文字
+		t || (t = "G"),
 		// 设置背景色
 		n || (n = "#ff0000"),
 		// 设置标题
 		r || (r = "程序员开发助手"),
 		// 设置离线图标
 		chrome.browserAction.setIcon({
-			path: "/static/img/inactive-icon19.png"
+			path: "/static/img/icon19.png"
 		}),
 		chrome.browserAction.setBadgeText({
 			text: t
@@ -1265,7 +1267,10 @@ define("app/b", [], function(t, e) {
 			path: "/static/img/icon19.png"
 		}),
 		chrome.browserAction.setBadgeText({
-			text: ""
+			text: "G"
+		}),
+		chrome.browserAction.setBadgeBackgroundColor({
+			color: "#008000"
 		}),
 		chrome.browserAction.setTitle({
 			title: "程序员开发助手"
