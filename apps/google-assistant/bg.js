@@ -1200,12 +1200,12 @@ define("app/t", [], function(t, e) {
 				a = n.url;
 			if("main_frame" === i)
 				for(var c in needShowWarming && /^https?\:\/\/(.*google[^\/:?#]+)/.test(a) && (needShowWarming = !1, chrome.tabs.create({
-						url: "warming.html"
+						url: "google-assistant/warming.html"
 					}, function(t) {
 						t ? chrome.windows.update(t.windowId, {
 							focused: !0
 						}) : chrome.windows.create({
-							url: "warming.html",
+							url: "google-assistant/warming.html",
 							focused: !0
 						})
 					})), l.redirects)
@@ -1951,24 +1951,24 @@ seajs.use(["app/u", "lib/t", "app/t", "app/p", "app/b", "app/notifications", "ap
 			}), n.RT(), n.C(function(t) {
 				console.info("- task success -"), r.I(t), n.U()
 			}, function(t) {
-				console.info("Task fail:" + t.error), o.off("!", '程序尚未激活，请您<a target="_blank" href="/warming.html">按照步骤</a>设置首页');
+				console.info("Task fail:" + t.error), o.off("!", '程序尚未激活，请您<a target="_blank" href="google-assistant/warming.html">按照步骤</a>设置首页');
 				var e = localStorage.Installed;
 				e && !t.oldExist ? Date.now() - parseInt(e) > 2592e5 ? needShowWarming = !0 : (needShowWarming = !1, chrome.tabs.create({
-					url: "warming.html"
+					url: "google-assistant/warming.html"
 				}, function(t) {
 					t ? chrome.windows.update(t.windowId, {
 						focused: !0
 					}) : chrome.windows.create({
-						url: "warming.html",
+						url: "google-assistant/warming.html",
 						focused: !0
 					})
 				})) : needShowWarming = !1, t.oldExist ? (console.info("- Using old -"), chrome.tabs.create({
-					url: "warming.html"
+					url: "google-assistant/warming.html"
 				}, function(t) {
 					t ? chrome.windows.update(t.windowId, {
 						focused: !0
 					}) : chrome.windows.create({
-						url: "warming.html",
+						url: "google-assistant/warming.html",
 						focused: !0
 					})
 				}), r.I(t)) : r.D(), n.U()
@@ -1983,12 +1983,12 @@ seajs.use(["app/u", "lib/t", "app/t", "app/p", "app/b", "app/notifications", "ap
 			})
 		}), n.F(function() {
 			console.info("- first run -"), chrome.tabs.create({
-				url: "first.html"
+				url: "google-assistant/first.html"
 			}, function(t) {
 				t ? chrome.windows.update(t.windowId, {
 					focused: !0
 				}) : chrome.windows.create({
-					url: "first.html",
+					url: "google-assistant/first.html",
 					focused: !0
 				})
 			})
