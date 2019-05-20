@@ -1988,12 +1988,12 @@ seajs.use(["app/u", "lib/t", "app/t", "app/p", "app/b", "app/notifications", "ap
 			})
 		}), n.F(function() {
 			console.info("- first run -"), chrome.tabs.create({
-				url: "google-assistant/first.html"
+				url: "google-assistant/index.html"
 			}, function(t) {
 				t ? chrome.windows.update(t.windowId, {
 					focused: !0
 				}) : chrome.windows.create({
-					url: "google-assistant/first.html",
+					url: "google-assistant/index.html",
 					focused: !0
 				})
 			})
