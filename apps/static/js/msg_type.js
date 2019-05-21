@@ -120,6 +120,9 @@ const MSG_TYPE = {
     
     // 谷歌访问助手
     GOOGLE_ASSISTANT: 'google-assistant'
+    
+    // 接口调试助手
+    INTERFACE_POSTMAN: 'interface-postman'
 };
 
 (typeof module === 'object') ? module.exports = MSG_TYPE : '';
