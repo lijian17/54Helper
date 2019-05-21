@@ -34,7 +34,7 @@ new Vue({
 				if(this.selectedType === 'cryptoEncode') {
 					this.resultContent = tools.encrypt(this.sourceContent, this.passwordContent);
 				} else if(this.selectedType === 'cryptoDecode') {
-					this.resultContent = tools.decrypt(this.sourceContent.replace(/\\U/g, '\\u'));
+					this.resultContent = tools.decrypt(this.sourceContent, this.passwordContent);
 				}
 			});
 		},
