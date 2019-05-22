@@ -154,7 +154,7 @@
       "css": ["octotree/content.css"]
     }
   ],
-  "content_security_policy": "default-src 'self'; connect-src *; style-src 'self' 'unsafe-inline';script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self' ; media-src 'self' filesystem:",
+  "content_security_policy": "default-src 'self'; connect-src *;img-src 'self' http://www.google-analytics.com; style-src 'self' 'unsafe-inline';script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com https://apis.google.com; object-src 'self' ; media-src 'self' filesystem:",
   "update_url": "https://clients2.google.com/service/update2/crx",
   "homepage_url": "https://github.com/lijian17/54Helper/wiki"
 }
