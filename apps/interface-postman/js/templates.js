@@ -128,7 +128,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<li><a class=\"environment-list-item-noenvironment\" >No environment</a></li>\n<li class=\"divider\"></li>\n<li><a href=\"#modal-environments\" data-toggle=\"modal\" data-keyboard=\"true\">Manage environments</a></li>";
+  return "<li><a class=\"environment-list-item-noenvironment\" >没有环境</a></li>\n<li class=\"divider\"></li>\n<li><a href=\"#modal-environments\" data-toggle=\"modal\" data-keyboard=\"true\">管理环境</a></li>";
   });
 
 this["Handlebars"]["templates"]["header_preset_list"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -615,7 +615,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"empty-message\">\n    You haven't created any collections yet. Collections let you group requests together for quick access.\n</div>";
+  return "<div class=\"empty-message\">\n    你尚未创建任何收藏夹。收藏夹允许你将请求组合在一起以便快速访问。\n</div>";
   });
 
 this["Handlebars"]["templates"]["message_no_history"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -624,7 +624,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"empty-message\">\n    Nothing in your history yet. You can automatically save and access your sent requests here.\n</div>";
+  return "<div class=\"empty-message\">\n    你的历史记录还没有。你可以在此处自动保存和访问你发送的请求。\n</div>";
   });
 
 this["Handlebars"]["templates"]["response_cookies"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

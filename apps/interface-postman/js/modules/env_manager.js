@@ -12,7 +12,7 @@ pm.envManager = {
         },
 
         removeEnvironmentData:function () {
-            $('#environment-quicklook-environments h6').html("No environment");
+            $('#environment-quicklook-environments h6').html("没有环境");
             $('#environment-quicklook-environments ul').html("");
         },
 
@@ -92,7 +92,7 @@ pm.envManager = {
             pm.envManager.selectedEnv = null;
             pm.settings.set("selectedEnvironmentId", "");
             pm.envManager.quicklook.removeEnvironmentData();
-            $('#environment-selector .environment-list-item-selected').html("No environment");
+            $('#environment-selector .environment-list-item-selected').html("没有环境");
         });
 
         $('#environment-quicklook').on("mouseenter", function () {
@@ -147,11 +147,11 @@ pm.envManager = {
             var d = $('#environments-list-help-detail').css("display");
             if (d === "none") {
                 $('#environments-list-help-detail').css("display", "inline");
-                $(this).html("Hide");
+                $(this).html("隐藏");
             }
             else {
                 $('#environments-list-help-detail').css("display", "none");
-                $(this).html("Tell me more");
+                $(this).html("查看更多");
             }
         });
 
@@ -281,7 +281,7 @@ pm.envManager = {
             }
             else {
                 pm.envManager.selectedEnv = null;
-                $('#environment-selector .environment-list-item-selected').html("No environment");
+                $('#environment-selector .environment-list-item-selected').html("没有环境");
             }
         })
     },

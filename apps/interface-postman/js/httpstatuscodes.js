@@ -22,7 +22,7 @@ httpStatusCodes = {
     },
     200:{
         "name":"OK",
-        "detail":"Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+        "detail":"成功的HTTP请求的标准响应。实际响应将取决于使用的请求方法。在GET请求中，响应将包含与请求的资源对应的实体。在POST请求中，响应将包含描述或包含操作结果的实体。"
     },
     201:{
         "name":"Created",
@@ -114,7 +114,7 @@ httpStatusCodes = {
     },
     404:{
         "name":"Not Found",
-        "detail":"The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+        "detail":"找不到请求的资源，但将来可能会再次可用。客户的后续请求是允许的。"
     },
     405:{
         "name": "Method Not Allowed",
