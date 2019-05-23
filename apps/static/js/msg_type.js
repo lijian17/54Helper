@@ -119,7 +119,10 @@ const MSG_TYPE = {
     REMOVE_BG:'remove-bg',
     
     // 谷歌访问助手
-    GOOGLE_ASSISTANT: 'google-assistant'
+    GOOGLE_ASSISTANT: 'google-assistant',
+    
+    // 接口调试助手
+    INTERFACE_POSTMAN: 'interface-postman'
 };
 
 (typeof module === 'object') ? module.exports = MSG_TYPE : '';
