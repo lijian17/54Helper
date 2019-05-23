@@ -188,6 +188,9 @@
 
 			            <input type="checkbox" value="GOOGLE_ASSISTANT" id="GOOGLE_ASSISTANT" v-model="selectedOpts"/>
 			            <label for="GOOGLE_ASSISTANT">谷歌访问助手（Google搜索、Chrome商店、Gmail邮箱、Google+）</label> <br/>
+
+			            <input type="checkbox" value="INTERFACE_POSTMAN" id="INTERFACE_POSTMAN" v-model="selectedOpts"/>
+			            <label for="INTERFACE_POSTMAN">接口调试助手（postman）</label> <br/>
                     </fieldset>
                 </div>
 
@@ -198,6 +201,8 @@
                         <ul class="fe-function-list">
                             <li class="-x-googleassistant" v-if="selectedOpts.includes('GOOGLE_ASSISTANT')">
                                 <b></b>谷歌访问助手</li>
+                            <li class="-x-interfacepostman" v-if="selectedOpts.includes('INTERFACE_POSTMAN')">
+                                <b></b>接口调试助手</li>
                             <li class="-x-endecode" v-if="selectedOpts.includes('EN_DECODE')">
                                 <b></b>字符串编解码</li>
                             <li class="-x-jsonformat" v-if="selectedOpts.includes('JSON_FORMAT')">
