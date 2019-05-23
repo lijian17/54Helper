@@ -30,6 +30,7 @@
 - GitHub代码浏览树
 - 谷歌访问助手（满足*.google.com都可访问）
 - 密钥版加解密工具
+- 接口调试助手（postman）
 
 ## 二、安装方法 
 1. 下载当前最新版[*.crx](https://github.com/lijian17/54Helper/releases)
