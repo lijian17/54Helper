@@ -2740,6 +2740,9 @@ const TEMPLATE = '<div>\n' +
     '          </div>\n' +
     '\n' +
     '          <div>\n' +
+    '            <label><input type="checkbox" data-store="DARKMODE" /> Dark模式</label>\n' +
+    '          </div>\n' +
+    '          <div>\n' +
     '            <label><input type="checkbox" data-store="HOVEROPEN" /> 鼠标悬停时打开边栏</label>\n' +
     '          </div>\n' +
     '          <div>\n' +
@@ -2836,6 +2839,8 @@ const PINNED_CLASS = 'octotree-pinned';
 
 const STORE = {
   TOKEN: 'octotree.access_token',
+  DARKMODE: 'octotree.dark_mode',
+  THEME: 'octotree.theme',
   HOVEROPEN: 'octotree.hover_open',
   NONCODE: 'octotree.noncode_shown',
   PR: 'octotree.pr_shown',
@@ -2851,6 +2856,8 @@ const STORE = {
 
 const DEFAULTS = {
   TOKEN: '',
+  DARKMODE: false,
+  THEME: '',//主题
   HOVEROPEN: true,
   NONCODE: true,
   PR: true,
@@ -4231,6 +4238,8 @@ $(document).ready(() => {
     const $sidebar = $dom.find('.octotree-sidebar');
     const $toggler = $sidebar.find('.octotree-toggle');
     const $views = $sidebar.find('.octotree-view');
+    const $footer = $sidebar.find('.octotree-footer');
+    const $viewHeader = $views.find('.octotree-view-header');
     const $spinner = $sidebar.find('.octotree-spin');
     const $pinner = $sidebar.find('.octotree-pin');
     const adapter = new GitHub(store);
@@ -4240,6 +4249,9 @@ $(document).ready(() => {
     const errorView = new ErrorView($dom, store);
     let currRepo = false;
     let hasError = false;
+    
+    // TODO 动态修改暗黑模式主题
+    setTheme('dark');
 
     $pinner.click(togglePin);
     setupSidebarFloatingBehaviors();
@@ -4324,6 +4336,10 @@ $(document).ready(() => {
           case STORE.HOTKEYS:
             setHotkeys(newValue, oldValue);
             break;
+          case STORE.DARKMODE:
+          	setTheme('dark');
+          	console.log("DARKMODE-------------------");
+          	break;
         }
       });
 
@@ -4508,6 +4524,25 @@ $(document).ready(() => {
         $toggler.off('mouseenter', onTogglerHovered);
         $toggler.on('click', onTogglerClicked);
       }
+    }
+    
+    /**
+     * 设置主题
+     * 
+     * @param {Object} theme
+     */
+    function setTheme(theme) {
+        store.set(STORE.THEME, theme);
+        
+	    if(this.store.get(STORE.DARKMODE)) {
+	    	$views.addClass('theme-dark-octotree-view');
+	    	$viewHeader.addClass('theme-dark-octotree-view-header');
+	    	$footer.addClass('theme-dark-octotree-footer');
+	    } else {
+	    	$views.removeClass('theme-dark-octotree-view')
+	    	$viewHeader.removeClass('theme-dark-octotree-view-header');
+	    	$footer.removeClass('theme-dark-octotree-footer');
+	    }
     }
 
     /**
