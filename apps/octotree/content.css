@@ -1052,8 +1052,8 @@
   float: right;
 }
 .octotree-sidebar.octotree-github-sidebar .octotree-views .octotree-settings-view > form > div {
-  padding-top: 5px;
-  padding-bottom: 12px;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 .octotree-sidebar.octotree-github-sidebar .octotree-views .octotree-settings-view > form label {
   font-weight: normal !important;
@@ -1420,6 +1420,18 @@
 }
 .theme-dark-octotree-view .jstree-wholerow-clicked {
 	background: #666666 !important;
+}
+.theme-dark-octotree-view .jstree-open > .jstree-ocl:before {
+	color: #4DACFD !important;
+}
+.theme-dark-octotree-view .jstree-open > .jstree-ocl:hover:before {
+	color: #4DACFD !important;
+}
+.theme-dark-octotree-view .jstree-closed > .jstree-ocl:before {
+	color: #4DACFD !important;
+}
+.theme-dark-octotree-view .jstree-closed > .jstree-ocl:hover:before {
+	color: #4DACFD !important;
 }
 .theme-dark-octotree-view-header {
 	background-color:#22272B !important;
