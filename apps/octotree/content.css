@@ -839,7 +839,7 @@
   color: #ffffff;
 }
 .octotree-sidebar.octotree-github-sidebar .octotree-views .octotree-tree-view .jstree-anchor {
-  color: #0f2e47 !important;
+  /*color: #0f2e47 !important;*/
   outline: none;
   padding-right: 0;
   text-decoration: none;
@@ -1408,4 +1408,26 @@
   .octotree-sidebar.octotree-github-sidebar .octotree-toggle {
     display: none;
   }
+}
+
+/*主题-dark模式*/
+.theme-dark-octotree-view {
+	background-color: #181A1B !important;
+	color: #4DACFD !important;
+}
+.theme-dark-octotree-view .jstree-wholerow-hovered {
+	background: #444444 !important;
+}
+.theme-dark-octotree-view .jstree-wholerow-clicked {
+	background: #666666 !important;
+}
+.theme-dark-octotree-view-header {
+	background-color:#22272B !important;
+}
+.theme-dark-octotree-footer {
+	background-color: #22272B !important;
+	border-top: #22272B !important;
+}
+.theme-dark-octotree-footer a {
+	color: #4DACFD !important;
 }
