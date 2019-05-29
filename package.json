@@ -1,6 +1,6 @@
 {
   "name": "54helper",
-  "version": "4.3.1",
+  "version": "4.4.0",
   "description": "程序员开发助手(chrome extension)",
   "main": "index.js",
   "dependencies": {},
