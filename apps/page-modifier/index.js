@@ -26,6 +26,8 @@ new Vue({
             styleActiveLine: true,
             lineWrapping: true
         });
+		
+		editor.setValue('// 以下代码将会红框标识百度推广广告（注：网址匹配规则填写为https://www.baidu.com/）\ndocument.querySelectorAll("div[cmatchid]").forEach((item) => {item.style.border = "10px solid red";});');
 
         // 退出的时候检测是否有未保存的数据
         window.onbeforeunload = function (e) {
