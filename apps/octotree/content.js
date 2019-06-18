@@ -3866,6 +3866,9 @@ class GitHub extends PjaxAdapter {
   }
 }
 
+/**
+ * 帮助popup
+ */
 class HelpPopup {
   constructor($dom, store) {
     this.$view = $dom.find('.popup');
@@ -3894,6 +3897,9 @@ class HelpPopup {
       $view.addClass('show').click(hideAndDestroy);
     }, 500);
 
+	/**
+	 * 隐藏和销毁
+	 */
     function hideAndDestroy() {
       store.set(STORE.POPUP, true);
       if ($view.hasClass('show')) {
@@ -3904,6 +3910,9 @@ class HelpPopup {
     }
   }
 
+  /**
+   * 设置显示安装警告
+   */
   setShowInstallationWarning() {
     this.showInstallationWarning = true;
   }
@@ -4259,10 +4268,12 @@ $(document).ready(() => {
 
     $html.hasClass(ADDON_CLASS) ? helpPopup.setShowInstallationWarning() : $html.addClass(ADDON_CLASS);
 
+	// 监听浏览器窗口大小变化
     $(window).resize((event) => {
       if (event.target === window) layoutChanged();
     });
 
+	// 循环给控件treeView, errorView, optsView注册事件
     for (const view of [treeView, errorView, optsView]) {
       $(view)
         .on(EVENT.VIEW_READY, function(event) {
@@ -4282,6 +4293,7 @@ $(document).ready(() => {
         .on(EVENT.FETCH_ERROR, (event, err) => showError(err));
     }
 
+	// 给document注册事件
     $document
       .on(EVENT.REQ_START, () => $spinner.addClass('octotree-spin--loading'))
       .on(EVENT.REQ_END, () => $spinner.removeClass('octotree-spin--loading'))
@@ -4289,6 +4301,7 @@ $(document).ready(() => {
       .on(EVENT.TOGGLE_PIN, layoutChanged)
       .on(EVENT.LOC_CHANGE, () => tryLoadRepo());
 
+	// 侧边栏初始样式参数设置
     $sidebar
       .addClass(adapter.getCssClass())
       .width(Math.min(parseInt(store.get(STORE.WIDTH)), 1000))
@@ -4352,6 +4365,10 @@ $(document).ready(() => {
       }
     }
 
+	/**
+	 * 尝试重新加载数据（已做缓存优化，避免重复发请求加载数据）
+	 * @param {Object} reload
+	 */
     function tryLoadRepo(reload) {
       const token = octotree.getAccessToken();
       adapter.getRepoFromPath(currRepo, token, (err, repo) => {
@@ -4359,8 +4376,8 @@ $(document).ready(() => {
           showError(err);
         } else if (repo) {
           if (store.get(STORE.PINNED) && !isSidebarVisible()) {
-            // If we're in pin mode but sidebar doesn't show yet, show it.
-            // Note if we're from another page back to code page, sidebar is "pinned", but not visible.
+            // 如果我们处于pin模式，但是侧边栏还没有显示，请显示它。
+			//注意，如果我们从另一页返回到代码页，则侧边栏是“固定”的，但不可见。
             if (isSidebarPinned()) toggleSidebar();
             else togglePin();
           } else if (isSidebarVisible()) {
@@ -4375,11 +4392,11 @@ $(document).ready(() => {
               treeView.syncSelection(repo);
             }
           } else {
-            // Sidebar not visible (because it's not pinned), show the toggler
+            // 侧边栏不可见（因为它没有固定），显示切换开关
             $toggler.show();
           }
         } else {
-          // Not a repo and not show in non-code page
+          // 不是repo，不在非代码页中显示
           $toggler.hide();
           toggleSidebar(false);
         }
@@ -4387,12 +4404,20 @@ $(document).ready(() => {
       });
     }
 
+	/**
+	 * 显示view容器页
+	 * @param {Object} view
+	 */
     function showView(view) {
       $views.removeClass('current');
       view.$view.addClass('current');
       $(view).trigger(EVENT.VIEW_SHOW);
     }
 
+	/**
+	 * 显示错误页
+	 * @param {Object} err
+	 */
     function showError(err) {
       hasError = true;
       errorView.show(err);
@@ -4400,6 +4425,10 @@ $(document).ready(() => {
       if (store.get(STORE.PINNED)) togglePin(true);
     }
 
+	/**
+	 * 侧边栏显示隐藏的切换控制
+	 * @param {Object} visibility
+	 */
     function toggleSidebar(visibility) {
       if (visibility !== undefined) {
         if (isSidebarVisible() === visibility) return;
@@ -4408,8 +4437,8 @@ $(document).ready(() => {
         $html.toggleClass(SHOW_CLASS);
         $document.trigger(EVENT.TOGGLE, isSidebarVisible());
 
-        // Ensure the repo is loaded when the sidebar shows after being hidden.
-        // Note that tryLoadRepo() already takes care of not reloading if nothing changes.
+        // 确保在侧边栏隐藏后显示时加载repo。
+		// 请注意，tryloadrepo（）已经负责在没有任何更改的情况下不重新加载。
         if (isSidebarVisible()) {
           $toggler.show();
           tryLoadRepo();
@@ -4419,6 +4448,10 @@ $(document).ready(() => {
       return visibility;
     }
 
+	/**
+	 * 固定边栏按钮的切换处理
+	 * @param {Object} isPinned
+	 */
     function togglePin(isPinned) {
       if (isPinned !== undefined) {
         if (isSidebarPinned() === isPinned) return;
@@ -4435,6 +4468,10 @@ $(document).ready(() => {
       return sidebarPinned;
     }
 
+	/**
+	 * 侧边栏宽度改变处理
+	 * @param {Object} save
+	 */
     function layoutChanged(save = false) {
       const width = $sidebar.outerWidth();
       adapter.updateLayout(isSidebarPinned(), isSidebarVisible(), width);
@@ -4444,7 +4481,7 @@ $(document).ready(() => {
     }
 
     /**
-     * Controls how the sidebar behaves in float mode (i.e. non-pinned).
+     * 控制边栏在浮动模式（即非固定）下的行为。
      */
     function setupSidebarFloatingBehaviors() {
       const MOUSE_LEAVE_DELAY = 500;
@@ -4453,7 +4490,7 @@ $(document).ready(() => {
 
       handleHoverOpenOption(this.store.get(STORE.HOVEROPEN));
 
-      // Immediately closes if click outside the sidebar.
+      // 如果在侧边栏外单击，则立即关闭。
       $document.on('click', () => {
         if (!isMouseInSidebar && !isSidebarPinned() && isSidebarVisible()) {
           toggleSidebar(false);
@@ -4461,7 +4498,7 @@ $(document).ready(() => {
       });
 
       $document.on('mouseover', () => {
-        // Ensure startTimer being executed only once when mouse is moving outside the sidebar
+        // 当鼠标移动到边栏外时，确保仅执行一次StartTimer。
         if (!timerId) {
           isMouseInSidebar = false;
           startTimer(MOUSE_LEAVE_DELAY);
@@ -4486,19 +4523,19 @@ $(document).ready(() => {
       $sidebar
         .on('keyup', () => startTimer(KEY_PRESS_DELAY))
         .on('mouseover', (event) => {
-          // Prevent mouseover from propagating to document
+          // 防止mouseover传播到document
           event.stopPropagation();
         })
         .on('focusin mousemove', (event) => {
-          // Don't do anything while hovering on Toggler
+          // 悬停在切换开关上时不要做任何事情
           const isHoveringToggler = $toggler.is(event.target) || $toggler.has(event.target).length;
 
           if (isHoveringToggler) return;
 
           /**
-           * Use 'focusin' instead of 'mouseenter' to handle the case when clicking a file in the
-           * sidebar then move outside -> 'mouseenter' is triggered in sidebar, clear the timer
-           * and keep sidebar open.
+           * 单击侧边栏中的文件，然后向外移动时，
+           * 使用“focusin”而不是“mouseenter”来处理这种情况->侧边栏中触发了“mouseenter”，
+           * 清除计时器并保持侧边栏打开。
            */
           isMouseInSidebar = true;
           clearTimer();
@@ -4516,7 +4553,13 @@ $(document).ready(() => {
       toggleSidebar(true);
     }
 
+	/**
+	 * 处理鼠标滑动到侧边栏开关处
+	 * 
+	 * @param {Object} enableHoverOpen
+	 */
     function handleHoverOpenOption(enableHoverOpen) {
+      // on添加事件、off移除事件
       if (enableHoverOpen) {
         $toggler.off('click', onTogglerClicked);
         $toggler.on('mouseenter', onTogglerHovered);
@@ -4546,7 +4589,7 @@ $(document).ready(() => {
     }
 
     /**
-     * Set new hot keys to pin or unpin the sidebar.
+     * 将新热键设置为固定或取消固定侧边栏。
      * @param {string} newKeys
      * @param {string?} oldKeys
      */
