@@ -26,8 +26,8 @@ new Vue({
             styleActiveLine: true,
             lineWrapping: true
         });
-		
-		editor.setValue('// 以下代码将会红框标识百度推广广告（注：网址匹配规则填写为https://www.baidu.com/）\ndocument.querySelectorAll("div[cmatchid]").forEach((item) => {item.style.border = "10px solid red";});');
+
+        editor.setValue('// 以下代码将会红框标识百度推广广告（注：网址匹配规则填写为https://www.baidu.com/）\ndocument.querySelectorAll("div[cmatchid]").forEach((item) => {item.style.border = "10px solid red";});');
 
         // 退出的时候检测是否有未保存的数据
         window.onbeforeunload = function (e) {
@@ -97,11 +97,24 @@ new Vue({
 
         saveModifier: function (isEditMode) {
             if (isEditMode) {
-                this.mScript = editor.getValue();
+                // 必须填写一个名称
+                if (!this.editCM.mName || !this.editCM.mName.trim()) {
+                    alert('网页精灵名称 不能为空，起一个自己看得懂的名字吧！');
+                    return false;
+                }
+
+                // 首先校验规则是否是一个合法正则表达式
+                let matchs = this.editCM.mPattern.trim().match(/\/(.*)\/([igm]*)?$/);
+                if (!matchs || !matchs.length) {
+                    alert('网页匹配规则 必须是一个正确的Javascript正则表达式！');
+                    return false;
+                }
+
+                this.editCM.mScript = editor.getValue();
                 this.cachedModifiers.some(cm => {
                     if (cm.id === this.editCM.id) {
-                        cm.mName = this.editCM.mName;
-                        cm.mPattern = this.editCM.mPattern;
+                        cm.mName = this.editCM.mName.trim();
+                        cm.mPattern = this.editCM.mPattern.trim();
                         cm.mFilter = this.editCM.mFilter;
                         cm.mRefresh = this.editCM.mRefresh;
                         cm.mScript = editor.getValue();
@@ -117,6 +130,7 @@ new Vue({
             }, () => {
                 alert('数据操作成功！');
                 this.editCM = this.getANewCM();
+                editor.setValue('// 以下代码将会红框标识百度推广广告（注：网址匹配规则填写为https://www.baidu.com/）\ndocument.querySelectorAll("div[cmatchid]").forEach((item) => {item.style.border = "10px solid red";});');
                 this.editing = false;
 
                 this.$refs.mForm.reset();
@@ -166,7 +180,9 @@ new Vue({
                                                     merge = confirm('发现有相同名称或规则的精灵，是否选择覆盖？');
                                                 }
                                                 if (merge) {
-                                                    cm = r;
+                                                    keys.forEach(k => {
+                                                        cm[k] = r[k];
+                                                    });
                                                 } else {
                                                     r.id += '_';
                                                 }

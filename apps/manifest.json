@@ -1,6 +1,6 @@
 {
   "name": "程序员开发助手(54Helper)",
-  "version": "4.6.1",
+  "version": "4.6.2",
   "manifest_version": 2,
   "default_locale": "zh_CN",
   "description": "54助手：JSON格式化、JSON比对、二维码、信息编解码、代码压缩&美化、页面取色、Markdown、网页截屏、编码设置、正则、Crontab、时间转换、网页性能检测、密码生成器、便签笔记、chrome插件下载等",
@@ -153,7 +153,6 @@
         "https://*/*"
       ],
       "js": [
-        "static/js/msg_type.js",
         "page-modifier/content-script.js"
       ],
       "run_at": "document_end",
